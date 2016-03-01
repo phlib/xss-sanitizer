@@ -38,12 +38,15 @@ class AttributeCleaner implements FilterInterface
     /**
      * AttributeCleaner constructor
      *
-     * @param string $tag
+     * @param string|string[] $tag
      * @param string $attribute
      * @param FilterInterface $attributeContentCleaner
      */
     public function __construct($tag, $attribute, FilterInterface $attributeContentCleaner)
     {
+        if (is_array($tag)) {
+            $tag = '(?:' . implode('|', $tag) . ')';
+        }
         $this->tag          = $tag;
         $this->attribute    = $attribute;
         $this->attrRegex    = $this->buildAttrRegex();
