@@ -46,9 +46,9 @@ class Sanitizer
         $this->filters = [];
 
         $attributeContentCleaner = new Filter\AttributeContentCleaner();
-        $this->filters[] = new Filter\AttributeCleaner(['a','link'], 'href', $attributeContentCleaner);
-        $this->filters[] = new Filter\AttributeCleaner(['img','input', 'bgsound'], 'src', $attributeContentCleaner);
-        $this->filters[] = new Filter\AttributeCleaner('[a-z]+', 'background', $attributeContentCleaner);
+        $this->filters[] = new Filter\AttributeCleaner('href', $attributeContentCleaner, ['a','link']);
+        $this->filters[] = new Filter\AttributeCleaner('src', $attributeContentCleaner, ['img','input', 'bgsound']);
+        $this->filters[] = new Filter\AttributeCleaner('background', $attributeContentCleaner);
         $this->filters[] = new Filter\ScriptTag();
         $this->filters[] = new Filter\RemoveAttributes();
         $this->filters[] = new Filter\MetaRefresh($attributeContentCleaner);

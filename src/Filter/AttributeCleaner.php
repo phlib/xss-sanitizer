@@ -13,7 +13,7 @@ class AttributeCleaner implements FilterInterface
     /**
      * @var string
      */
-    protected $tag;
+    protected $tags;
 
     /**
      * @var string
@@ -38,16 +38,19 @@ class AttributeCleaner implements FilterInterface
     /**
      * AttributeCleaner constructor
      *
-     * @param string|string[] $tag
      * @param string $attribute
      * @param FilterInterface $attributeContentCleaner
+     * @param string|string[]|null $tags
      */
-    public function __construct($tag, $attribute, FilterInterface $attributeContentCleaner)
+    public function __construct($attribute, FilterInterface $attributeContentCleaner, $tags = null)
     {
-        if (is_array($tag)) {
-            $tag = '(?:' . implode('|', $tag) . ')';
+        if (!$tags) {
+            $tags = '[a-z]+'; // all tags
         }
-        $this->tag          = $tag;
+        if (is_array($tags)) {
+            $tags = '(?:' . implode('|', $tags) . ')';
+        }
+        $this->tags          = $tags;
         $this->attribute    = $attribute;
         $this->attrRegex    = $this->buildAttrRegex();
         $this->contentRegex = $this->buildContentRegex();
@@ -56,10 +59,10 @@ class AttributeCleaner implements FilterInterface
     }
 
     /**
-     * Given the tag and attribute to look for, will search for tags with that attribute containing potential XSS
+     * Given the tags and attribute to look for, will search for tags with that attribute containing potential XSS
      * exploits, and remove the attribute if found
      *
-     * e.g. with $tag='a' and $attr='href'
+     * e.g. with $tags='a' and $attr='href'
      *     <a href="javascript:alert('XSS');">
      * should become
      *     <a >
@@ -69,9 +72,9 @@ class AttributeCleaner implements FilterInterface
      */
     public function filter($str)
     {
-        if (preg_match('/<' . $this->tag . '/i', $str)) {
+        if (preg_match('/<' . $this->tags . '/i', $str)) {
             $str = preg_replace_callback(
-                '#<' . $this->tag . '[^a-z0-9>]+([^>]*?)(?:>|$)#i',
+                '#<' . $this->tags . '[^a-z0-9>]+([^>]*?)(?:>|$)#i',
                 function($matches) {
                     return $this->cleanAttributes($matches[0], $matches[1]);
                 },
@@ -82,7 +85,7 @@ class AttributeCleaner implements FilterInterface
     }
 
     /**
-     * Search for the attribute in the tag, and clean it if found
+     * Search for the attribute in the tags, and clean it if found
      *
      * @param string $fullTag (e.g. '<a href="javascript:alert('XSS');">')
      * @param string $attributes (e.g. 'a href="javascript:alert('XSS');"')

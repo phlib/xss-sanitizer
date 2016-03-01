@@ -37,7 +37,7 @@ class AttributeCleanerTraitTest extends \PHPUnit_Framework_TestCase
     public function testCleanLinkHref($original, $expected)
     {
 
-        $actual = (new AttributeCleaner('a', 'href', $this->cleaner))->filter($original);
+        $actual = (new AttributeCleaner('href', $this->cleaner, ['a','link']))->filter($original);
         $this->assertEquals($expected, $actual);
     }
 
@@ -61,7 +61,15 @@ class AttributeCleanerTraitTest extends \PHPUnit_Framework_TestCase
 
             // Test some valid values for href
             ['<a href="http://google.com">', '<a href="http://google.com">'],
-            ['<a href=\'http://google.com\'>', '<a href=\'http://google.com\'>'],
+
+            ['<link href="javascript:alert(\'XSS\')">', '<link >'],
+            ['<link href="javascript:alert(\'XSS\')" >', '<link  >'],
+            ['<link href=\'javascript:alert("XSS")\'>', '<link >'],
+            ['<link href=`javascript:alert(\'XSS\')`>', '<link >'],
+            ['<link href=javascript:alert(\'XSS\')>', '<link >'],
+            ['<link href=javascript:alert(\'XSS\') >', '<link  >'],
+            ['<link href=javascript:alert(\'XSS\');>', '<link >'],
+            ['<link href=\'http://google.com\'>', '<link href=\'http://google.com\'>'],
         ];
     }
 
@@ -72,8 +80,7 @@ class AttributeCleanerTraitTest extends \PHPUnit_Framework_TestCase
      */
     public function testCleanImgSrc($original, $expected)
     {
-
-        $actual = (new AttributeCleaner('img', 'src', $this->cleaner))->filter($original);
+        $actual = (new AttributeCleaner('src', $this->cleaner, 'img'))->filter($original);
         $this->assertEquals($expected, $actual);
     }
 
@@ -87,6 +94,26 @@ class AttributeCleanerTraitTest extends \PHPUnit_Framework_TestCase
             ['<img src=javascript:alert(\'XSS\')>', '<img >'],
             ['<img src=javascript:alert(\'XSS\') >', '<img  >'],
             ['<img src=javascript:alert(\'XSS\');>', '<img >'],
+        ];
+    }
+
+    /**
+     * @dataProvider cleanBackgroundAnyTagDataProvider
+     * @param string $original
+     * @param string $expected
+     */
+    public function testCleanBackgroundAnyTag($original, $expected)
+    {
+        $actual = (new AttributeCleaner('background', $this->cleaner))->filter($original);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function cleanBackgroundAnyTagDataProvider()
+    {
+        return [
+            ['<div background="javascript:alert(\'XSS\')">', '<div >'],
+            ['<body background="javascript:alert(\'XSS\')">', '<body >'],
+            ['<span background="javascript:alert(\'XSS\')">', '<span >'],
         ];
     }
 
