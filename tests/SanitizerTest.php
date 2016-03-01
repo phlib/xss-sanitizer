@@ -48,6 +48,8 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
             ['<img onerror=alert(\'XSS\');>', '<img >'],
 
             ['<INPUT TYPE="IMAGE" SRC="javascript:alert(\'XSS\');">', '<INPUT TYPE="IMAGE" >'],
+
+            ['<body background="javascript:alert(\'XSS\');">', '<body >'],
         ];
     }
 
