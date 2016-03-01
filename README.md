@@ -19,3 +19,13 @@ $sanitizer = new \Phlib\XssSanitizer\Sanitizer();
 $sanitized = $sanitizer->sanitize($htmlInput);
 
 ```
+
+## Supported Browsers
+
+This library is intended to prevent XSS vulnerabilities when the resulting HTML is rendered by any of the following browsers:
+
+* Chrome (40+)
+* Firefox (40+)
+* Safari (8+)
+* IE (10, 11)
+* Edge
