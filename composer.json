@@ -1,6 +1,6 @@
 {
     "name": "phlib/xss-sanitizer",
-    "description": "Library for sanitizing HTML against XSS vulnerabilities",
+    "description": "PHP XSS sanitizer tool for HTML",
     "authors": [
         {
             "name": "Martin Price",
