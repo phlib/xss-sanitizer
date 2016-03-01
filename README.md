@@ -1,5 +1,7 @@
 # phlib/xss-sanitizer
 
+[![Build Status](https://img.shields.io/travis/phlib/xss-sanitizer/master.svg?style=flat-square)](https://travis-ci.org/phlib/xss-sanitizer)
+
 PHP XSS sanitizer tool for HTML
 
 ## Disclaimer
