@@ -2,7 +2,9 @@
 
 namespace Phlib\XssSanitizer\Filter;
 
+use Phlib\XssSanitizer\AttributeFinder;
 use Phlib\XssSanitizer\FilterInterface;
+use Phlib\XssSanitizer\TagFinder;
 
 /**
  * Class RemoveAttributes
@@ -11,14 +13,19 @@ use Phlib\XssSanitizer\FilterInterface;
 class RemoveAttributes implements FilterInterface
 {
     /**
-     * @var string
+     * @var array
      */
-    protected $searchRegex;
+    protected $attributes;
 
     /**
-     * @var string
+     * @var TagFinder
      */
-    protected $replaceRegex;
+    protected $tagFinder;
+
+    /**
+     * @var AttributeFinder
+     */
+    protected $attributeFinder;
 
     /**
      * RemoveAttributes constructor
@@ -31,8 +38,8 @@ class RemoveAttributes implements FilterInterface
             'seeksegmenttime',
         ];
 
-        $this->searchRegex  = $this->buildSearchRegex();
-        $this->replaceRegex = $this->buildReplaceRegex();
+        $this->tagFinder       = new TagFinder($this->attributes, TagFinder::BY_ATTR);
+        $this->attributeFinder = new AttributeFinder($this->attributes);
     }
 
     /**
@@ -46,13 +53,9 @@ class RemoveAttributes implements FilterInterface
      */
     public function filter($str)
     {
-        $str = preg_replace_callback(
-            $this->searchRegex,
-            function ($matches) {
-                return $this->removeAttribute($matches[0], $matches[1]);
-            },
-            $str
-        );
+        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+            return $this->removeAttribute($fullTag, $attributes);
+        });
 
         return $str;
     }
@@ -66,52 +69,11 @@ class RemoveAttributes implements FilterInterface
      */
     protected function removeAttribute($fullTag, $attributes)
     {
-        $replacement = preg_replace($this->replaceRegex, '', $attributes);
+        $replacement = $this->attributeFinder->findAttributes($attributes, function() {
+            return '';
+        });
 
         return str_ireplace($attributes, $replacement, $fullTag);
-    }
-
-    /**
-     * Build the regex for finding tags which contain one or more of the unwanted attributes
-     *
-     * @return string
-     */
-    protected function buildSearchRegex()
-    {
-        return implode('',[
-            '#',
-                '<([^>]+',
-                '(?<!\w)',
-                    '(?:', implode('|', $this->attributes), ')',
-                '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
-                '=[^>]+)>',
-            '#si',
-        ]);
-    }
-
-    /**
-     * Build the regex for replacing unwanted attributes
-     *
-     * @return string
-     */
-    protected function buildReplaceRegex()
-    {
-        return implode('', [
-            '#',
-            '(?<!\w)',
-                '(?:', implode('|', $this->attributes), ')',
-            '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
-            '=',
-            '(?:',
-                '(["\'`])', // quoted
-                '.*?',
-                '\1', // quote character
-            '|',
-                '(?<!["\'`])', // unqouted
-                '((?:[^ >;])*;?)', // everything up to space, '>' or ';'
-            ')',
-            '#si',
-        ]);
     }
 
 }

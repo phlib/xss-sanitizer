@@ -2,7 +2,9 @@
 
 namespace Phlib\XssSanitizer\Filter;
 
+use Phlib\XssSanitizer\AttributeFinder;
 use Phlib\XssSanitizer\FilterInterface;
+use Phlib\XssSanitizer\TagFinder;
 
 /**
  * Class AttributeCleaner
@@ -11,19 +13,14 @@ use Phlib\XssSanitizer\FilterInterface;
 class AttributeCleaner implements FilterInterface
 {
     /**
-     * @var string
+     * @var TagFinder
      */
-    protected $tags;
+    protected $tagFinder;
 
     /**
-     * @var string
+     * @var AttributeFinder
      */
-    protected $attribute;
-
-    /**
-     * @var string
-     */
-    protected $attrRegex;
+    protected $attrFinder;
 
     /**
      * @var string
@@ -44,15 +41,9 @@ class AttributeCleaner implements FilterInterface
      */
     public function __construct($attribute, FilterInterface $attributeContentCleaner, $tags = null)
     {
-        if (!$tags) {
-            $tags = '[a-z]+'; // all tags
-        }
-        if (is_array($tags)) {
-            $tags = '(?:' . implode('|', $tags) . ')';
-        }
-        $this->tags          = $tags;
-        $this->attribute    = $attribute;
-        $this->attrRegex    = $this->buildAttrRegex();
+        $this->tagFinder  = $tags ? new TagFinder($tags) : new TagFinder($attribute, TagFinder::BY_ATTR);
+        $this->attrFinder = new AttributeFinder($attribute);
+
         $this->contentRegex = $this->buildContentRegex();
 
         $this->attributeContentCleaner = $attributeContentCleaner;
@@ -72,15 +63,10 @@ class AttributeCleaner implements FilterInterface
      */
     public function filter($str)
     {
-        if (preg_match('/<' . $this->tags . '/i', $str)) {
-            $str = preg_replace_callback(
-                '#<' . $this->tags . '[^a-z0-9>]+([^>]*?)(?:>|$)#i',
-                function($matches) {
-                    return $this->cleanAttributes($matches[0], $matches[1]);
-                },
-                $str
-            );
-        }
+        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+            return $this->cleanAttributes($fullTag, $attributes);
+        });
+
         return $str;
     }
 
@@ -93,22 +79,9 @@ class AttributeCleaner implements FilterInterface
      */
     protected function cleanAttributes($fullTag, $attributes)
     {
-        if (!preg_match('/'. $this->attribute .'/i', $attributes)) {
-            return $fullTag;
-        }
-
-        $replacement = preg_replace_callback(
-            $this->attrRegex,
-            function($matches) {
-                if (isset($matches[2]) && $matches[2]) {
-                    $attributeContents = $matches[2]; // quoted contents
-                } else {
-                    $attributeContents = $matches[3]; // unquoted contents
-                }
-                return $this->cleanAttribute($matches[0], $attributeContents);
-            },
-            $attributes
-        );
+        $replacement = $this->attrFinder->findAttributes($attributes, function($fullAttribute, $attributeContents) {
+            return $this->cleanAttribute($fullAttribute, $attributeContents);
+        });
 
         return str_ireplace($attributes, $replacement, $fullTag);
     }
@@ -130,31 +103,6 @@ class AttributeCleaner implements FilterInterface
         }
 
         return $fullAttribute;
-    }
-
-    /**
-     * Build the regex for finding the attribute in the attributes string and returning the attribute content
-     *
-     * @return string
-     */
-    protected function buildAttrRegex()
-    {
-        $attr = $this->attribute;
-        return implode('', [
-            '#',
-            $attr,
-            '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
-            '=',
-            '(?:',
-                '(["\'`])', // quoted
-                '(.*?)',
-                '\1', // quote character
-            '|',
-                '(?<!["\'`])', // unqouted
-                '((?:[^ >])*)', // everything up to space or '>'
-            ')',
-            '#si',
-        ]);
     }
 
     /**

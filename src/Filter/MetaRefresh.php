@@ -2,7 +2,9 @@
 
 namespace Phlib\XssSanitizer\Filter;
 
+use Phlib\XssSanitizer\AttributeFinder;
 use Phlib\XssSanitizer\FilterInterface;
+use Phlib\XssSanitizer\TagFinder;
 
 /**
  * Class MetaRefresh
@@ -11,9 +13,14 @@ use Phlib\XssSanitizer\FilterInterface;
 class MetaRefresh implements FilterInterface
 {
     /**
-     * @var string
+     * @var TagFinder
      */
-    protected $attrRegex;
+    protected $tagFinder;
+
+    /**
+     * @var AttributeFinder
+     */
+    protected $attrFinder;
 
     /**
      * @var FilterInterface
@@ -26,7 +33,8 @@ class MetaRefresh implements FilterInterface
      */
     public function __construct(FilterInterface $attributeContentCleaner)
     {
-        $this->attrRegex = $this->buildAttrRegex();
+        $this->tagFinder  = new TagFinder('meta');
+        $this->attrFinder = new AttributeFinder('http-equiv');
 
         $this->attributeContentCleaner = $attributeContentCleaner;
     }
@@ -44,15 +52,9 @@ class MetaRefresh implements FilterInterface
      */
     public function filter($str)
     {
-        if (preg_match('/<meta/i', $str)) {
-            $str = preg_replace_callback(
-                '#<meta[^a-z0-9>]+([^>]*?)(?:>|$)#i',
-                function($matches) {
-                    return $this->cleanTag($matches[0], $matches[1]);
-                },
-                $str
-            );
-        }
+        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+            return $this->cleanTag($fullTag, $attributes);
+        });
         return $str;
     }
 
@@ -65,41 +67,19 @@ class MetaRefresh implements FilterInterface
      */
     protected function cleanTag($fullTag, $attributes)
     {
-        if (preg_match($this->attrRegex, $attributes, $matches)) {
-            if (isset($matches[2]) && $matches[2]) {
-                $attributeContents = $matches[2]; // quoted contents
-            } else {
-                $attributeContents = $matches[3]; // unquoted contents
-            }
-            $cleanedContents = $this->attributeContentCleaner->filter($attributeContents);
+        $isRefreshTag = false;
+
+        $this->attrFinder->findAttributes($attributes, function($full, $contents) use (&$isRefreshTag) {
+            $cleanedContents = $this->attributeContentCleaner->filter($contents);
             if (preg_match('/refresh/i', $cleanedContents)) {
-                $fullTag = '';
+                $isRefreshTag = true;
             }
+            return $full;
+        });
+
+        if ($isRefreshTag) {
+            $fullTag = '';
         }
         return $fullTag;
-    }
-
-    /**
-     * Build the regex for getting the content of the 'http-equiv' attribute
-     *
-     * @return string
-     */
-    protected function buildAttrRegex()
-    {
-        return implode('', [
-            '#',
-            'http-equiv',
-            '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
-            '=',
-            '(?:',
-                '(["\'`])', // quoted
-                '(.*?)',
-                '\1', // quote character
-            '|',
-                '(?<!["\'`])', // unqouted
-                '((?:[^ >])*)', // everything up to space or '>'
-            ')',
-            '#si',
-        ]);
     }
 }
