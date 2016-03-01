@@ -12,19 +12,19 @@ use Phlib\XssSanitizer\FilterRunnerTrait;
  */
 class AttributeContentCleaner implements FilterInterface
 {
-
     use FilterRunnerTrait;
+
+    /**
+     * @var FilterInterface[]
+     */
+    protected $filters;
 
     /**
      * AttributeContentCleaner constructor
      */
     public function __construct()
     {
-        $this->filters = [
-            new AttributeContent\DecodeUtf8(),
-            new AttributeContent\DecodeEntities(),
-            new AttributeContent\CompactExplodedWords(),
-        ];
+        $this->initFilters();
     }
 
     /**
@@ -42,6 +42,18 @@ class AttributeContentCleaner implements FilterInterface
     public function filter($str)
     {
         return $this->runFilters($str, $this->filters);
+    }
+
+    /**
+     * Create the filters and add to the filters array
+     */
+    protected function initFilters()
+    {
+        $this->filters = [
+            new AttributeContent\DecodeUtf8(),
+            new AttributeContent\DecodeEntities(),
+            new AttributeContent\CompactExplodedWords(),
+        ];
     }
 
 }
