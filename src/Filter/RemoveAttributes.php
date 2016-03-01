@@ -83,6 +83,7 @@ class RemoveAttributes implements FilterInterface
                 '<([^>]+',
                 '(?<!\w)',
                     '(?:', implode('|', $this->attributes), ')',
+                '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
                 '=[^>]+)>',
             '#si',
         ]);
@@ -99,6 +100,7 @@ class RemoveAttributes implements FilterInterface
             '#',
             '(?<!\w)',
                 '(?:', implode('|', $this->attributes), ')',
+            '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
             '=',
             '(?:',
                 '(["\'`])', // quoted

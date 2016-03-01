@@ -50,6 +50,9 @@ class MetaRefreshTest extends \PHPUnit_Framework_TestCase
             // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META_with_additional_URL_parameter
             ['<META HTTP-EQUIV="refresh" CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
 
+            // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
+            ['<META HTTP-EQUIV!#$%&()*~+-_.,:;?@[/|\]^`="refresh" CONTENT="0;url=javascript:alert(\'XSS\');">', ''],
+
             ['<META HTTP-EQUIV=refresh CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
             ['<META HTTP-EQUIV=`refresh` CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
             ['<META HTTP-EQUIV=\'refresh\' CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],

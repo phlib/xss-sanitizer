@@ -52,6 +52,9 @@ class AttributeCleanerTraitTest extends \PHPUnit_Framework_TestCase
             ['<a href=javascript:alert(\'XSS\') >', '<a  >'],
             ['<a href=javascript:alert(\'XSS\');>', '<a >'],
 
+            // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
+            ['<a href!#$%&()*~+-_.,:;?@[/|\]^`=javascript:alert(\'XSS\');>', '<a >'],
+
             // Test that attribute content cleaner is being used
             ['<a href="java script:alert(\'XSS\')">', '<a >'],
             ['<a href=java&#115;cript:alert(\'XSS\')>', '<a >'],

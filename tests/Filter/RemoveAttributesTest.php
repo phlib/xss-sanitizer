@@ -39,6 +39,9 @@ class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
             ['<body seekSegmentTime="alert(document.cookie);">', '<body >'],
 
             ['<body onload="alert(document.cookie);" onerror="alert(document.cookie);">', '<body  >'],
+
+            // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
+            ['<body onload!#$%&()*~+-_.,:;?@[/|\]^`="alert(document.cookie);">', '<body >'],
         ];
     }
 
