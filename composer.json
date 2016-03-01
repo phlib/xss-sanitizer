@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Phlib\\XssSanitizer\\": "src"
+            "Phlib\\XssSanitizer\\": "src/"
         }
     },
     "require": {
@@ -20,7 +20,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Phlib\\XssSanitizer\\Test\\": "tests"
+            "Phlib\\XssSanitizer\\Test\\": "tests/"
         }
     }
 }
