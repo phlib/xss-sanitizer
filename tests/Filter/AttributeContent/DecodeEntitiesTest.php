@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlib\XssSanitizer\Test\Filter\AttributeContents;
+namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeEntities;
 
