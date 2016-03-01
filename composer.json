@@ -1,5 +1,6 @@
 {
     "name": "phlib/xss-sanitizer",
+    "type": "library",
     "description": "PHP XSS sanitizer tool for HTML",
     "authors": [
         {
