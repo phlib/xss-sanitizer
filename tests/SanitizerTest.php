@@ -25,9 +25,11 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
     public function sanitizeDataProvider()
     {
         return [
-            ['<body><script>alert(\'XSS\');</script></body>', '<body>&lt;script>alert(\'XSS\');&lt;/script></body>'],
-            ['<body><iframe src="xss.com"></iframe></body>', '<body>&lt;iframe src="xss.com">&lt;/iframe></body>'],
-            ['<body><OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"></OBJECT></body>', '<body>&lt;OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html">&lt;/OBJECT></body>'],
+            ['<body><script>alert(\'XSS\');</script></body>', '<body></body>'],
+            ['<body><iframe src="xss.com"></iframe></body>', '<body></body>'],
+            ['<body><OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"></OBJECT></body>', '<body></body>'],
+
+            ['<body><scr<script></script>ipt>alert(\'XSS\');</script></body>', '<body>&lt;script>alert(\'XSS\');&lt;/script></body>'],
 
             ['<a href="javascript:alert(\'XSS\')">', '<a >'],
             ['<a href="javascript:alert(\'XSS\')" >', '<a  >'],
