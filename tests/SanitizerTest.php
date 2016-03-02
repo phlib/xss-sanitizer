@@ -31,6 +31,9 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
 
             ['<body><scr<script></script>ipt>alert(\'XSS\');</script></body>', '<body></body>'],
 
+            // script tags should be escaped if we can't remove the whole block
+            ['<body><script>alert(\'XSS\');</body>', '<body>&lt;script>alert(\'XSS\');</body>'],
+
             ['<a href="javascript:alert(\'XSS\')">', '<a >'],
             ['<a href="javascript:alert(\'XSS\')" >', '<a  >'],
             ['<a href=\'javascript:alert("XSS")\'>', '<a >'],
