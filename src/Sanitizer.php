@@ -50,7 +50,7 @@ class Sanitizer
         $this->filters[] = new Filter\AttributeCleaner('src', $attributeContentCleaner, ['img','input', 'bgsound']);
         $this->filters[] = new Filter\AttributeCleaner('action', $attributeContentCleaner, ['form']);
         $this->filters[] = new Filter\AttributeCleaner('background', $attributeContentCleaner);
-        $this->filters[] = new Filter\ScriptTag();
+        $this->filters[] = new Filter\EscapeTags(['script', 'iframe']);
         $this->filters[] = new Filter\RemoveAttributes();
         $this->filters[] = new Filter\MetaRefresh($attributeContentCleaner);
     }
