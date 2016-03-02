@@ -52,6 +52,7 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
             ['<link href="javascript:alert(\'XSS\');">', '<link >'],
             ['<bgsound src="javascript:alert(\'XSS\');">', '<bgsound >'],
             ['<form action="javascript:alert(\'XSS\');">', '<form >'],
+            ['<svg/onload=alert(\'XSS\')>', '<svg/>'],
         ];
     }
 
