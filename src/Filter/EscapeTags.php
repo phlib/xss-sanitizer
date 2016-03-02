@@ -45,7 +45,9 @@ class EscapeTags implements FilterInterface
     }
 
     /**
-     * @param $tags
+     * Build the search regex based on the tags specified
+     *
+     * @param string|string[] $tags
      * @return string
      */
     protected function initSearchRegex($tags)
