@@ -29,6 +29,8 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
             ['<body><scri<script>pt>alert(\'XSS\');<scri</script>pt></body>', '<body><scri&lt;script>pt>alert(\'XSS\');<scri&lt;/script>pt></body>'],
             ['<body><iframe src="xss.com"></iframe></body>', '<body>&lt;iframe src="xss.com">&lt;/iframe></body>'],
 
+            ['<body><OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"></OBJECT></body>', '<body>&lt;OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html">&lt;/OBJECT></body>'],
+
             ['<a href="javascript:alert(\'XSS\')">', '<a >'],
             ['<a href="javascript:alert(\'XSS\')" >', '<a  >'],
             ['<a href=\'javascript:alert("XSS")\'>', '<a >'],
