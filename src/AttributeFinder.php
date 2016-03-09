@@ -29,6 +29,9 @@ class AttributeFinder
      */
     public function __construct($attributes)
     {
+        if (!is_array($attributes)) {
+            $attributes = [$attributes];
+        }
         $this->attributes             = $attributes;
         $this->optimisticSearchRegex  = $this->initOptimisticSearchRegex();
         $this->pessimisticSearchRegex = $this->initPessimisticSearchRegex($attributes);
@@ -142,14 +145,12 @@ class AttributeFinder
     /**
      * Build the search regex based on the attributes specified
      *
-     * @param string $attributes
+     * @param array $attributes
      * @return string
      */
     protected function initPessimisticSearchRegex($attributes)
     {
-        if (is_array($attributes)) {
-            $attributes = '(?:' . implode('|', $attributes) . ')';
-        }
+        $attributes = '(?:' . implode('|', $attributes) . ')';
         return implode('', [
             '#',
             '(?<!\w)',
