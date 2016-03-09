@@ -42,6 +42,9 @@ class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
 
             // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
             ['<body onload!#$%&()*~+-_.,:;?@[/|\]^`="alert(document.cookie);">', '<body >'],
+
+            // valid values
+            ['<a href="http://my.website/index.php?onetimekey=abc">', '<a href="http://my.website/index.php?onetimekey=abc">'],
         ];
     }
 
