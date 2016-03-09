@@ -70,7 +70,7 @@ class RemoveBlocks implements FilterInterface
                 '\1',
                 '([^>]*?)',
                 '(>|$)',
-            '#i',
+            '#si',
         ]);
     }
 }
