@@ -52,7 +52,6 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
         $replacer = function() use ($replacement) {
             return $replacement;
         };
-        $expected = vsprintf($expected, [$replacement]);
         $actual   = $tagFinder->findTags($str, $replacer);
 
         $this->assertEquals($expected, $actual);
