@@ -67,7 +67,7 @@ class ByTag implements TagFinderInterface
         return implode('', [
             '#<',
             $tags,
-            '[^a-z0-9>]+([^>]*?)(?:>|$)',
+            '[^a-z0-9>]+([^>]*)(?:>|$)',
             '#i'
         ]);
     }
