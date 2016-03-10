@@ -100,7 +100,7 @@ class ByAttribute implements TagFinderInterface
     protected function findStartOfTag($beforeStr)
     {
         // Searching backwards from the found attribute
-        $startTag = preg_match('#^([^>]+)[a-z+]<#si', strrev($beforeStr), $matches);
+        $startTag = preg_match('#^([^>]+)[a-z]<#si', strrev($beforeStr), $matches);
         if (!$startTag) {
             return null;
         } else {
