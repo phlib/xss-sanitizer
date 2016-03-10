@@ -1,37 +1,31 @@
 <?php
 
-namespace Phlib\XssSanitizer;
+namespace Phlib\XssSanitizer\TagFinder;
+
+use Phlib\XssSanitizer\TagFinderInterface;
 
 /**
- * Class TagFinder
+ * Class ByTag
  * @package Phlib\XssSanitizer
  */
-class TagFinder
+class ByTag implements TagFinderInterface
 {
-    const BY_TAG  = 1;
-    const BY_ATTR = 2;
-
     /**
      * @var string
      */
     protected $searchRegex;
 
     /**
-     * TagFinder constructor
-     * @param string|string[] $searchValues
-     * @param int $mode                         Should be either TagFinder::BY_TAG or TagFinder::BY_ATTR
+     * ByTag constructor
+     * @param string|string[] $tags
      */
-    public function __construct($searchValues, $mode = self::BY_TAG)
+    public function __construct($tags)
     {
-        if ($mode == self::BY_ATTR) {
-            $this->searchRegex = $this->initByAttrRegex($searchValues);
-        } else {
-            $this->searchRegex = $this->initByTagRegex($searchValues);
-        }
+        $this->searchRegex = $this->initSearchRegex($tags);
     }
 
     /**
-     * Given a full html string, finds the required tags by either tag name or attribute and calls the callback,
+     * Given a full html string, finds the required tags by either tag name and calls the callback,
      * providing the full tag string and the attributes string
      *
      * The return value is used to replace the full tag string
@@ -65,7 +59,7 @@ class TagFinder
      * @param string|string[] $tags
      * @return string
      */
-    protected function initByTagRegex($tags)
+    protected function initSearchRegex($tags)
     {
         if (is_array($tags)) {
             $tags = '(?:' . implode('|', $tags) . ')';
@@ -75,28 +69,6 @@ class TagFinder
             $tags,
             '[^a-z0-9>]+([^>]*?)(?:>|$)',
             '#i'
-        ]);
-    }
-
-    /**
-     * Build the search regex based on the attributes specified
-     *
-     * @param string|string[] $attributes
-     * @return string
-     */
-    protected function initByAttrRegex($attributes)
-    {
-        if (is_array($attributes)) {
-            $attributes = '(?:' . implode('|', $attributes) . ')';
-        }
-        return implode('',[
-            '#',
-                '<[a-z]+([^>]+',
-                '(?<!\w)',
-                    $attributes,
-                '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
-                '=[^>]+)>',
-            '#si',
         ]);
     }
 }
