@@ -6,7 +6,7 @@ use Phlib\XssSanitizer\TagFinderInterface;
 
 /**
  * Class ByAttribute
- * @package Phlib\XssSanitizer\TagFinder\ByTag
+ * @package Phlib\XssSanitizer\TagFinder
  */
 class ByAttribute implements TagFinderInterface
 {
