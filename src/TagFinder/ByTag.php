@@ -68,7 +68,7 @@ class ByTag implements TagFinderInterface
             '#<',
             $tags,
             '[^a-z0-9>]+([^>]*)(?:>|$)',
-            '#i'
+            '#si'
         ]);
     }
 }
