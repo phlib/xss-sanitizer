@@ -4,6 +4,7 @@ namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\AttributeFinder;
 use Phlib\XssSanitizer\FilterInterface;
+use Phlib\XssSanitizer\TagFinderInterface;
 use Phlib\XssSanitizer\TagFinder;
 
 /**
@@ -13,7 +14,7 @@ use Phlib\XssSanitizer\TagFinder;
 class AttributeCleaner implements FilterInterface
 {
     /**
-     * @var TagFinder
+     * @var TagFinderInterface
      */
     protected $tagFinder;
 
@@ -41,7 +42,7 @@ class AttributeCleaner implements FilterInterface
      */
     public function __construct($attribute, FilterInterface $attributeContentCleaner, $tags = null)
     {
-        $this->tagFinder  = $tags ? new TagFinder($tags) : new TagFinder($attribute, TagFinder::BY_ATTR);
+        $this->tagFinder  = $tags ? new TagFinder\ByTag($tags) : new TagFinder\ByAttribute($attribute);
         $this->attrFinder = new AttributeFinder($attribute);
 
         $this->contentRegex = $this->buildContentRegex();

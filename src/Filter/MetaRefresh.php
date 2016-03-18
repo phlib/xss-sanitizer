@@ -13,7 +13,7 @@ use Phlib\XssSanitizer\TagFinder;
 class MetaRefresh implements FilterInterface
 {
     /**
-     * @var TagFinder
+     * @var TagFinder\ByTag
      */
     protected $tagFinder;
 
@@ -33,7 +33,7 @@ class MetaRefresh implements FilterInterface
      */
     public function __construct(FilterInterface $attributeContentCleaner)
     {
-        $this->tagFinder  = new TagFinder('meta');
+        $this->tagFinder  = new TagFinder\ByTag('meta');
         $this->attrFinder = new AttributeFinder('http-equiv');
 
         $this->attributeContentCleaner = $attributeContentCleaner;

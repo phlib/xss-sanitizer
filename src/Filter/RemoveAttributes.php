@@ -14,7 +14,7 @@ class RemoveAttributes implements FilterInterface
 {
 
     /**
-     * @var TagFinder
+     * @var TagFinder\ByAttribute
      */
     protected $tagFinder;
 
@@ -49,7 +49,7 @@ class RemoveAttributes implements FilterInterface
             'seeksegmenttime',
         ];
 
-        $this->tagFinder       = new TagFinder($attributes, TagFinder::BY_ATTR);
+        $this->tagFinder       = new TagFinder\ByAttribute($attributes);
         $this->attributeFinder = new AttributeFinder($attributes);
     }
 
