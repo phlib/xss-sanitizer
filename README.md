@@ -1,6 +1,8 @@
 # phlib/xss-sanitizer
 
 [![Build Status](https://img.shields.io/travis/phlib/xss-sanitizer/master.svg?style=flat-square)](https://travis-ci.org/phlib/xss-sanitizer)
+[![Latest Stable Version](https://img.shields.io/packagist/v/phlib/xss-sanitizer.svg?style=flat-square)](https://packagist.org/packages/phlib/xss-sanitizer)
+[![Total Downloads](https://img.shields.io/packagist/dt/phlib/xss-sanitizer.svg?style=flat-square)](https://packagist.org/packages/phlib/xss-sanitizer)
 
 PHP XSS sanitizer tool for HTML
 
