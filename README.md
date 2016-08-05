@@ -14,14 +14,27 @@ This library was created to try to solve the problem of XSS sanitization without
 
 This library is also intended for a limited use case whereby it is assumed that the sanitized HTML is only going to be displayed in a limited set of supported browsers (e.g. no need to strip 'vbscript:' code).
 
+## Installation
+
+Using Composer just run:
+
+```
+composer require phlib/xss-sanitizer
+```
+
 ## Usage
 
 Create a sanitizer and sanitize some input
 
 ``` php
 $sanitizer = new \Phlib\XssSanitizer\Sanitizer();
-$sanitized = $sanitizer->sanitize($htmlInput);
+$sanitized = $sanitizer->sanitize($html);
+```
 
+Or use the static method signature to change that into a one-liner:
+
+```php
+$sanitized = \Phlib\XssSanitizer\Sanitizer::clean($html);
 ```
 
 ## Supported Browsers
