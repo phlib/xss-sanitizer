@@ -26,6 +26,39 @@ class Sanitizer
     }
 
     /**
+     * Forward static calls as non-static calls.
+     *
+     * @param  string $method to be called
+     * @param  array $arguments to be passed to called method
+     * @return mixed
+     */
+    public static function __callStatic($method, $arguments)
+    {
+        return call_user_func_array([self::make(), $method], $arguments);
+    }
+
+    /**
+     * Make a new instance of Sanitizer
+     *
+     * @return \Phlib\XssSanitizer\Sanitizer
+     */
+    public static function make()
+    {
+        return new static;
+    }
+
+    /**
+     * Sanitize a HTML string
+     *
+     * @param string $str
+     * @return string
+     */
+    protected function clean($str)
+    {
+        return $this->sanitize($str);
+    }
+
+    /**
      * Sanitize a HTML string
      *
      * @param string $str

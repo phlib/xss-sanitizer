@@ -20,6 +20,12 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
     {
         $actual = (new Sanitizer())->sanitize($original);
         $this->assertEquals($expected, $actual);
+
+        $actual = Sanitizer::make()->sanitize($original);
+        $this->assertEquals($expected, $actual);
+
+        $actual = Sanitizer::clean($original);
+        $this->assertEquals($expected, $actual);
     }
 
     public function sanitizeDataProvider()
