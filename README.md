@@ -14,6 +14,14 @@ This library was created to try to solve the problem of XSS sanitization without
 
 This library is also intended for a limited use case whereby it is assumed that the sanitized HTML is only going to be displayed in a limited set of supported browsers (e.g. no need to strip 'vbscript:' code).
 
+## Install
+
+Via Composer
+
+``` bash
+$ composer require phlib/xss-sanitizer
+```
+
 ## Usage
 
 Create a sanitizer and sanitize some input
