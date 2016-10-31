@@ -62,4 +62,21 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testSanitizeArray()
+    {
+        $strings = [
+            '<body><script>alert(\'XSS\');</script></body>',
+            '<img onerror=alert(\'XSS\')>',
+        ];
+
+        $expected = [
+            '<body></body>',
+            '<img >',
+        ];
+
+        $actual = (new Sanitizer())->sanitizeArray($strings);
+        
+        $this->assertEquals($expected, $actual);
+    }
+
 }
