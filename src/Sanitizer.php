@@ -39,6 +39,21 @@ class Sanitizer
     }
 
     /**
+     * Sanitize an array of HTML strings
+     *
+     * @param string[] $strings
+     * @return string[]
+     */
+    public function sanitizeArray(array $strings)
+    {
+        foreach ($strings as &$str) {
+            $str = $this->sanitize($str);
+        }
+
+        return $strings;
+    }
+
+    /**
      * Create the filters and add to the filters array
      */
     protected function initFilters()
