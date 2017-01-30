@@ -2,6 +2,7 @@
     "name": "phlib/xss-sanitizer",
     "type": "library",
     "description": "PHP XSS sanitizer tool for HTML",
+    "license": "LGPL-3.0",
     "authors": [
         {
             "name": "Martin Price",
