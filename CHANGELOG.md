@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Use SemVer for dependency versions. This effectively removes unintended
   support for PHP v8, as this package has only been tested for PHP v5.5 - v7.1.
+### Removed
+- **BC break**: Removed support for PHP versions < v7.1 as they are no longer
+  [actively supported](https://php.net/supported-versions.php) by the PHP project.
 
 ## [1.0.1] - 2016-11-01
 - Adds a method for sanitizing an array of strings.
