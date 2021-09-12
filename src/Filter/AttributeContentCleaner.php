@@ -2,7 +2,6 @@
 
 namespace Phlib\XssSanitizer\Filter;
 
-use Phlib\XssSanitizer\Filter\AttributeContent;
 use Phlib\XssSanitizer\FilterInterface;
 use Phlib\XssSanitizer\FilterRunnerTrait;
 
@@ -18,9 +17,6 @@ class AttributeContentCleaner implements FilterInterface
      */
     protected $filters;
 
-    /**
-     * AttributeContentCleaner constructor
-     */
     public function __construct()
     {
         $this->initFilters();
@@ -54,5 +50,4 @@ class AttributeContentCleaner implements FilterInterface
             new AttributeContent\CompactExplodedWords(),
         ];
     }
-
 }

@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Filter\AttributeContent\DecodeUtf8;
  */
 class DecodeUtf8Test extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider decodeDataProvider
      * @param string $original
@@ -31,5 +30,4 @@ class DecodeUtf8Test extends \PHPUnit_Framework_TestCase
             ['xx \u003A xx', 'xx : xx'],
         ];
     }
-
 }

@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Sanitizer;
  */
 class SanitizerTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider sanitizeDataProvider
      * @param string $original
@@ -74,8 +73,7 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $actual = (new Sanitizer())->sanitizeArray($strings);
-        
+
         $this->assertEquals($expected, $actual);
     }
-
 }

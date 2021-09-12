@@ -38,14 +38,13 @@ class ByTag implements TagFinderInterface
      * and the return from the callback would replace the $fullTag in the original string
      *
      * @param string $str
-     * @param callable $callback
      * @return string
      */
     public function findTags($str, callable $callback)
     {
         return preg_replace_callback(
             $this->searchRegex,
-            function($matches) use ($callback) {
+            function ($matches) use ($callback) {
                 return $callback($matches[0], $matches[1]);
             },
             $str
@@ -67,7 +66,7 @@ class ByTag implements TagFinderInterface
             '#<',
             $tags,
             '[^a-z0-9>]+([^>]*)(?:>|$)',
-            '#si'
+            '#si',
         ]);
     }
 }

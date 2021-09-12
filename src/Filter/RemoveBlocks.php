@@ -57,18 +57,18 @@ class RemoveBlocks implements FilterInterface
         }
         return implode('', [
             '#',
-                // open tag
-                '<',
-                '(', $tags, ')',
-                '([^>]*?)',
-                '>',
-                // content
-                '.*?',
-                // closing tag
-                '</',
-                '\1',
-                '([^>]*?)',
-                '(>|$)',
+            // open tag
+            '<',
+            '(', $tags, ')',
+            '([^>]*?)',
+            '>',
+            // content
+            '.*?',
+            // closing tag
+            '</',
+            '\1',
+            '([^>]*?)',
+            '(>|$)',
             '#si',
         ]);
     }

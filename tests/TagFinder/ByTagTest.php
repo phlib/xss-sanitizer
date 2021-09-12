@@ -14,7 +14,7 @@ class ByTagTest extends \PHPUnit_Framework_TestCase
         $tagFinder = new TagFinder\ByTag('title');
 
         $str = '<html><body><a title="something"></body></html>';
-        $expectedFullTag    = '<a title="something">';
+        $expectedFullTag = '<a title="something">';
         $expectedAttributes = ' title="something"';
         $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes) {
             static::assertSame($expectedFullTag, $fullTag);

@@ -8,7 +8,6 @@ namespace Phlib\XssSanitizer;
  */
 interface FilterInterface
 {
-
     /**
      * Apply this filter to the string, returning the filtered string
      *
@@ -16,5 +15,4 @@ interface FilterInterface
      * @return string
      */
     public function filter($str);
-
 }

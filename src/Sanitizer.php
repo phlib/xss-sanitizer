@@ -2,8 +2,6 @@
 
 namespace Phlib\XssSanitizer;
 
-use Phlib\XssSanitizer\Filter;
-
 /**
  * @package Phlib\XssSanitizer
  */
@@ -16,9 +14,6 @@ class Sanitizer
      */
     protected $filters;
 
-    /**
-     * Sanitizer constructor
-     */
     public function __construct()
     {
         $this->initFilters();
@@ -60,8 +55,8 @@ class Sanitizer
         $this->filters = [];
 
         $attributeContentCleaner = new Filter\AttributeContentCleaner();
-        $this->filters[] = new Filter\AttributeCleaner('href', $attributeContentCleaner, ['a','link']);
-        $this->filters[] = new Filter\AttributeCleaner('src', $attributeContentCleaner, ['img','input', 'bgsound']);
+        $this->filters[] = new Filter\AttributeCleaner('href', $attributeContentCleaner, ['a', 'link']);
+        $this->filters[] = new Filter\AttributeCleaner('src', $attributeContentCleaner, ['img', 'input', 'bgsound']);
         $this->filters[] = new Filter\AttributeCleaner('action', $attributeContentCleaner, ['form']);
         $this->filters[] = new Filter\AttributeCleaner('background', $attributeContentCleaner);
         $this->filters[] = new Filter\FilterRunner(

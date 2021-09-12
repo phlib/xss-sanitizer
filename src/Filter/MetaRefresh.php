@@ -26,13 +26,9 @@ class MetaRefresh implements FilterInterface
      */
     protected $attributeContentCleaner;
 
-    /**
-     * MetaRefresh constructor
-     * @param FilterInterface $attributeContentCleaner
-     */
     public function __construct(FilterInterface $attributeContentCleaner)
     {
-        $this->tagFinder  = new TagFinder\ByTag('meta');
+        $this->tagFinder = new TagFinder\ByTag('meta');
         $this->attrFinder = new AttributeFinder('http-equiv');
 
         $this->attributeContentCleaner = $attributeContentCleaner;
@@ -51,7 +47,7 @@ class MetaRefresh implements FilterInterface
      */
     public function filter($str)
     {
-        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes) {
             return $this->cleanTag($fullTag, $attributes);
         });
         return $str;
@@ -68,7 +64,7 @@ class MetaRefresh implements FilterInterface
     {
         $isRefreshTag = false;
 
-        $this->attrFinder->findAttributes($attributes, function($full, $contents) use (&$isRefreshTag) {
+        $this->attrFinder->findAttributes($attributes, function ($full, $contents) use (&$isRefreshTag) {
             $cleanedContents = $this->attributeContentCleaner->filter($contents);
             if (preg_match('/refresh/i', $cleanedContents)) {
                 $isRefreshTag = true;

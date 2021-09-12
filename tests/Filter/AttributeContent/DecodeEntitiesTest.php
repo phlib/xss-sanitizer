@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Filter\AttributeContent\DecodeEntities;
  */
 class DecodeEntitiesTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider decodeDataProvider
      * @param string $original
@@ -39,5 +38,4 @@ class DecodeEntitiesTest extends \PHPUnit_Framework_TestCase
             ['xx &#x0000000000000006a xx', 'xx j xx'],
         ];
     }
-
 }

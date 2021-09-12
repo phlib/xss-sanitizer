@@ -20,7 +20,7 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
         $cleaner = $this->getMock(FilterInterface::class);
         $cleaner->expects($this->any())
             ->method('filter')
-            ->will($this->returnCallback(function($str) {
+            ->will($this->returnCallback(function ($str) {
                 $str = str_ireplace('java script', 'javascript', $str);
                 $str = str_ireplace('java&#115;cript', 'javascript', $str);
                 return $str;
@@ -35,8 +35,7 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCleanLinkHref($original, $expected)
     {
-
-        $actual = (new AttributeCleaner('href', $this->cleaner, ['a','link']))->filter($original);
+        $actual = (new AttributeCleaner('href', $this->cleaner, ['a', 'link']))->filter($original);
         $this->assertEquals($expected, $actual);
     }
 
@@ -115,5 +114,4 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
             ['<span background="javascript:alert(\'XSS\')">', '<span >'],
         ];
     }
-
 }

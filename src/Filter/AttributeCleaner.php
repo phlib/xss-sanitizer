@@ -4,8 +4,8 @@ namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\AttributeFinder;
 use Phlib\XssSanitizer\FilterInterface;
-use Phlib\XssSanitizer\TagFinderInterface;
 use Phlib\XssSanitizer\TagFinder;
+use Phlib\XssSanitizer\TagFinderInterface;
 
 /**
  * @package Phlib\XssSanitizer
@@ -36,12 +36,11 @@ class AttributeCleaner implements FilterInterface
      * AttributeCleaner constructor
      *
      * @param string $attribute
-     * @param FilterInterface $attributeContentCleaner
      * @param string|string[]|null $tags
      */
     public function __construct($attribute, FilterInterface $attributeContentCleaner, $tags = null)
     {
-        $this->tagFinder  = $tags ? new TagFinder\ByTag($tags) : new TagFinder\ByAttribute($attribute);
+        $this->tagFinder = $tags ? new TagFinder\ByTag($tags) : new TagFinder\ByAttribute($attribute);
         $this->attrFinder = new AttributeFinder($attribute);
 
         $this->contentRegex = $this->buildContentRegex();
@@ -63,7 +62,7 @@ class AttributeCleaner implements FilterInterface
      */
     public function filter($str)
     {
-        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes) {
             return $this->cleanAttributes($fullTag, $attributes);
         });
 
@@ -79,7 +78,7 @@ class AttributeCleaner implements FilterInterface
      */
     protected function cleanAttributes($fullTag, $attributes)
     {
-        $replacement = $this->attrFinder->findAttributes($attributes, function($fullAttribute, $attributeContents) {
+        $replacement = $this->attrFinder->findAttributes($attributes, function ($fullAttribute, $attributeContents) {
             return $this->cleanAttribute($fullAttribute, $attributeContents);
         });
 
@@ -118,9 +117,8 @@ class AttributeCleaner implements FilterInterface
 
         return implode('', [
             '#',
-                '(', implode('|', $dangerous), ')',
+            '(', implode('|', $dangerous), ')',
             '#i',
         ]);
     }
-
 }

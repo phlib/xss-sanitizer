@@ -8,7 +8,6 @@ namespace Phlib\XssSanitizer;
  */
 interface TagFinderInterface
 {
-
     /**
      * Given a full html string, finds the required tags by either tag name or attribute and calls the callback,
      * providing the full tag string and the attributes string
@@ -24,9 +23,7 @@ interface TagFinderInterface
      * and the return from the callback would replace the $fullTag in the original string
      *
      * @param string $str
-     * @param callable $callback
      * @return string
      */
     public function findTags($str, callable $callback);
-
 }

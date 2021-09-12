@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Filter\RemoveBlocks;
  */
 class RemoveBlocksTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider removeBlocksDataProvider
      * @param string $original
@@ -17,7 +16,6 @@ class RemoveBlocksTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveBlocks($original, $expected)
     {
-
         $actual = (new RemoveBlocks('script'))->filter($original);
         $this->assertEquals($expected, $actual);
     }
@@ -35,5 +33,4 @@ class RemoveBlocksTest extends \PHPUnit_Framework_TestCase
             ['<body><script>var x = "</script>";alert(\'XSS\');</script></body>', '<body>";alert(\'XSS\');</script></body>'],
         ];
     }
-
 }

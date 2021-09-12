@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Filter\EscapeTags;
  */
 class EscapeTagsTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider escapeTagsDataProvider
      * @param string $original
@@ -17,7 +16,6 @@ class EscapeTagsTest extends \PHPUnit_Framework_TestCase
      */
     public function testEscapeTags($original, $expected)
     {
-
         $actual = (new EscapeTags('script'))->filter($original);
         $this->assertEquals($expected, $actual);
     }
@@ -29,5 +27,4 @@ class EscapeTagsTest extends \PHPUnit_Framework_TestCase
             ['<body><scri<script>pt>alert(\'XSS\');<scri</script>pt></body>', '<body><scri&lt;script>pt>alert(\'XSS\');<scri&lt;/script>pt></body>'],
         ];
     }
-
 }

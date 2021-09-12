@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Filter\AttributeContent\CompactExplodedWords;
  */
 class CompactExplodedWordsTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider filterDataProvider
      * @param string $original
@@ -32,5 +31,4 @@ class CompactExplodedWordsTest extends \PHPUnit_Framework_TestCase
             ['javascriptor', 'javascriptor'],
         ];
     }
-
 }

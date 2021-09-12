@@ -8,7 +8,6 @@ namespace Phlib\XssSanitizer;
  */
 trait FilterRunnerTrait
 {
-
     /**
      * Run the filters repeatedly until they no longer change the string
      *
@@ -40,5 +39,4 @@ trait FilterRunnerTrait
         }
         return $str;
     }
-
 }

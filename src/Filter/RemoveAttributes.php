@@ -11,7 +11,6 @@ use Phlib\XssSanitizer\TagFinder;
  */
 class RemoveAttributes implements FilterInterface
 {
-
     /**
      * @var TagFinder\ByAttribute
      */
@@ -22,9 +21,6 @@ class RemoveAttributes implements FilterInterface
      */
     protected $attributeFinder;
 
-    /**
-     * RemoveAttributes constructor
-     */
     public function __construct()
     {
         // source: https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Event_Handlers
@@ -48,7 +44,7 @@ class RemoveAttributes implements FilterInterface
             'seeksegmenttime',
         ];
 
-        $this->tagFinder       = new TagFinder\ByAttribute($attributes);
+        $this->tagFinder = new TagFinder\ByAttribute($attributes);
         $this->attributeFinder = new AttributeFinder($attributes);
     }
 
@@ -63,7 +59,7 @@ class RemoveAttributes implements FilterInterface
      */
     public function filter($str)
     {
-        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes) {
             return $this->removeAttribute($fullTag, $attributes);
         });
 
@@ -79,11 +75,10 @@ class RemoveAttributes implements FilterInterface
      */
     protected function removeAttribute($fullTag, $attributes)
     {
-        $replacement = $this->attributeFinder->findAttributes($attributes, function() {
+        $replacement = $this->attributeFinder->findAttributes($attributes, function () {
             return '';
         });
 
         return str_ireplace($attributes, $replacement, $fullTag);
     }
-
 }

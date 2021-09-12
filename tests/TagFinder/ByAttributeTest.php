@@ -14,9 +14,9 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
         $tagFinder = new TagFinder\ByAttribute('title');
 
         $str = '<html><body><a title="something"></body></html>';
-        $expectedFullTag    = '<a title="something">';
+        $expectedFullTag = '<a title="something">';
         $expectedAttributes = ' title="something"';
-        $callback = function($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes) {
+        $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes) {
             $this->assertEquals($expectedFullTag, $fullTag);
             $this->assertEquals($expectedAttributes, $attributes);
         };
@@ -33,7 +33,7 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
             '<a name="thename">',
         ];
         $actualFullTags = [];
-        $callback = function($fullTag) use (&$actualFullTags) {
+        $callback = function ($fullTag) use (&$actualFullTags) {
             $actualFullTags[] = $fullTag;
         };
         $tagFinder->findTags($str, $callback);
@@ -52,10 +52,10 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
     {
         $tagFinder = new TagFinder\ByAttribute('title');
 
-        $replacer = function() use ($replacement) {
+        $replacer = function () use ($replacement) {
             return $replacement;
         };
-        $actual   = $tagFinder->findTags($str, $replacer);
+        $actual = $tagFinder->findTags($str, $replacer);
 
         $this->assertEquals($expected, $actual);
     }
@@ -64,9 +64,8 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
     {
         $r = '<!--replacement!-->';
         return [
-            ['<html><body><a title="something"></body></html>', $r, "<html><body>$r</body></html>"],
-            ['<html><body><a title="something"><a title="something"></body></html>', $r, "<html><body>$r$r</body></html>"],
+            ['<html><body><a title="something"></body></html>', $r, "<html><body>{$r}</body></html>"],
+            ['<html><body><a title="something"><a title="something"></body></html>', $r, "<html><body>{$r}{$r}</body></html>"],
         ];
     }
-
 }

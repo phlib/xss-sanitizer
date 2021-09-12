@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Filter\RemoveAttributes;
  */
 class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider removeAttributesDataProvider
      * @param string $original
@@ -17,7 +16,6 @@ class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveAttributes($original, $expected)
     {
-
         $actual = (new RemoveAttributes())->filter($original);
         $this->assertEquals($expected, $actual);
     }
@@ -52,5 +50,4 @@ class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
             ['<a href="http://my.website/index.php?onload=dostuff">', '<a href="http://my.website/index.php?onload=dostuff">'],
         ];
     }
-
 }

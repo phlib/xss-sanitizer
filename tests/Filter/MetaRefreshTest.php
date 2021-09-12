@@ -20,7 +20,7 @@ class MetaRefreshTest extends \PHPUnit_Framework_TestCase
         $cleaner = $this->getMock(FilterInterface::class);
         $cleaner->expects($this->any())
             ->method('filter')
-            ->will($this->returnCallback(function($str) {
+            ->will($this->returnCallback(function ($str) {
                 $str = str_ireplace('re fresh', 'refresh', $str);
                 $str = str_ireplace('re&#115;fresh', 'refresh', $str);
                 return $str;
@@ -65,5 +65,4 @@ class MetaRefreshTest extends \PHPUnit_Framework_TestCase
             ['<meta http-equiv="x-ua-compatible" content="ie=edge">', '<meta http-equiv="x-ua-compatible" content="ie=edge">'],
         ];
     }
-
 }

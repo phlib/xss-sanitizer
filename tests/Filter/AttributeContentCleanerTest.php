@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\Filter\AttributeContentCleaner;
  */
 class AttributeContentCleanerTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider cleanAttributeContentDataProvider
      * @param string $original
@@ -57,5 +56,4 @@ class AttributeContentCleanerTest extends \PHPUnit_Framework_TestCase
             ['jav&#x0D;ascript:alert(\'XSS\');', "javascript:alert('XSS');"],
         ];
     }
-
 }

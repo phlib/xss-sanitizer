@@ -9,15 +9,11 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class DecodeEntities implements FilterInterface
 {
-
     /**
      * @var string
      */
     protected $entityRegex;
 
-    /**
-     * DecodeEntities constructor
-     */
     public function __construct()
     {
         $this->entityRegex = $this->buildEntityRegex();
@@ -44,7 +40,7 @@ class DecodeEntities implements FilterInterface
                 } else {
                     $entity = "&#x{$matches[2]};";
                 }
-                return mb_convert_encoding($entity, "UTF-8", "HTML-ENTITIES");
+                return mb_convert_encoding($entity, 'UTF-8', 'HTML-ENTITIES');
             },
             $str
         );
@@ -60,19 +56,18 @@ class DecodeEntities implements FilterInterface
     {
         return implode('', [
             '/',
-                '&#',
-                '(?:',
-                    // decimal
-                    '(?:0*)', // ignore zero padding
-                    '([0-9]+)',
-                '|',
-                    // hexadecimal
-                    'x(?:0*)', // ignore zero padding
-                    '([0-9a-f]+)',
-                ')',
-                '(;)?',
+            '&#',
+            '(?:',
+                // decimal
+                '(?:0*)', // ignore zero padding
+                '([0-9]+)',
+            '|',
+                // hexadecimal
+                'x(?:0*)', // ignore zero padding
+                '([0-9a-f]+)',
+            ')',
+            '(;)?',
             '/i',
         ]);
     }
-
 }

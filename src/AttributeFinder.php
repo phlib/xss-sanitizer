@@ -31,8 +31,8 @@ class AttributeFinder
         if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
-        $this->attributes             = $attributes;
-        $this->optimisticSearchRegex  = $this->initOptimisticSearchRegex();
+        $this->attributes = $attributes;
+        $this->optimisticSearchRegex = $this->initOptimisticSearchRegex();
         $this->pessimisticSearchRegex = $this->initPessimisticSearchRegex($attributes);
     }
 
@@ -51,7 +51,6 @@ class AttributeFinder
      * and the return from the callback would replace the $fullAttribute in the original string
      *
      * @param string $attributes
-     * @param callable $callback
      * @return string
      */
     public function findAttributes($attributes, callable $callback)
@@ -75,8 +74,6 @@ class AttributeFinder
      * when we know that the attribute is well formed
      *
      * @param string $attributes
-     * @param callable $callback
-     * @param array $filtered
      */
     protected function findAttributesOptimistic(&$attributes, callable $callback, array &$filtered)
     {
@@ -101,14 +98,14 @@ class AttributeFinder
     {
         return implode('', [
             '#',
-                '^(\s*)',        // group 1 (whitespace)
-                '(',             // group 2 (full attribute)
-                    '([a-z]+)',  // group 3 (attribute name)
-                    '=',
-                    '(["\'])',   // group 4 (quote)
-                    '(.*?)',     // group 5 (attribute value)
-                    '\4',
-                ')',
+            '^(\s*)',        // group 1 (whitespace)
+            '(',             // group 2 (full attribute)
+                '([a-z]+)',  // group 3 (attribute name)
+                '=',
+                '(["\'])',   // group 4 (quote)
+                '(.*?)',     // group 5 (attribute value)
+                '\4',
+            ')',
             '#si',
         ]);
     }
@@ -122,14 +119,12 @@ class AttributeFinder
      * of the attribute appearing, which may include occurances within an attribute value
      *
      * @param string $attributes
-     * @param callable $callback
-     * @param array $filtered
      */
     protected function findAttributesPessimistic($attributes, callable $callback, array &$filtered)
     {
         $filtered[] = preg_replace_callback(
             $this->pessimisticSearchRegex,
-            function($matches) use ($callback) {
+            function ($matches) use ($callback) {
                 if (isset($matches[2]) && $matches[2]) {
                     $attributeContents = $matches[2]; // quoted contents
                 } else {
@@ -167,5 +162,4 @@ class AttributeFinder
             '#si',
         ]);
     }
-
 }

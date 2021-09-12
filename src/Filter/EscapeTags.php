@@ -9,7 +9,6 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class EscapeTags implements FilterInterface
 {
-
     /**
      * @var string
      */
@@ -55,10 +54,9 @@ class EscapeTags implements FilterInterface
         }
         return implode('', [
             '#',
-                '<',
-                '(/?', $tags , ')',
+            '<',
+            '(/?', $tags, ')',
             '#si',
         ]);
     }
-
 }

@@ -9,15 +9,11 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class CompactExplodedWords implements FilterInterface
 {
-
     /**
      * @var string
      */
     protected $wordsRegex;
 
-    /**
-     * CompactExplodedWords constructor
-     */
     public function __construct()
     {
         $this->wordsRegex = $this->buildWordsRegex();
@@ -68,5 +64,4 @@ class CompactExplodedWords implements FilterInterface
             '#(', implode('|', $words), ')(\W|$)#is',
         ]);
     }
-
 }

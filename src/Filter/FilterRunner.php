@@ -39,5 +39,4 @@ class FilterRunner implements FilterInterface
     {
         return $this->runFilters($str, $this->filters);
     }
-
 }
