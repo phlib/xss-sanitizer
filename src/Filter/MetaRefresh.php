@@ -16,17 +16,17 @@ class MetaRefresh implements FilterInterface
     /**
      * @var TagFinder\ByTag
      */
-    protected $tagFinder;
+    private $tagFinder;
 
     /**
      * @var AttributeFinder
      */
-    protected $attrFinder;
+    private $attrFinder;
 
     /**
      * @var FilterInterface
      */
-    protected $attributeContentCleaner;
+    private $attributeContentCleaner;
 
     public function __construct(FilterInterface $attributeContentCleaner)
     {
@@ -58,7 +58,7 @@ class MetaRefresh implements FilterInterface
      * @param string $fullTag (e.g. '<meta http-equiv="refresh">')
      * @param string $attributes (e.g. 'meta http-equiv="refresh"')
      */
-    protected function cleanTag(string $fullTag, string $attributes): string
+    private function cleanTag(string $fullTag, string $attributes): string
     {
         $isRefreshTag = false;
 

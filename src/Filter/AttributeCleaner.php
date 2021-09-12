@@ -17,22 +17,22 @@ class AttributeCleaner implements FilterInterface
     /**
      * @var TagFinderInterface
      */
-    protected $tagFinder;
+    private $tagFinder;
 
     /**
      * @var AttributeFinder
      */
-    protected $attrFinder;
+    private $attrFinder;
 
     /**
      * @var string
      */
-    protected $contentRegex;
+    private $contentRegex;
 
     /**
      * @var FilterInterface
      */
-    protected $attributeContentCleaner;
+    private $attributeContentCleaner;
 
     /**
      * @param string|string[]|null $tags
@@ -71,7 +71,7 @@ class AttributeCleaner implements FilterInterface
      * @param string $fullTag (e.g. '<a href="javascript:alert('XSS');">')
      * @param string $attributes (e.g. 'a href="javascript:alert('XSS');"')
      */
-    protected function cleanAttributes(string $fullTag, string $attributes): string
+    private function cleanAttributes(string $fullTag, string $attributes): string
     {
         $replacement = $this->attrFinder->findAttributes($attributes, function ($fullAttribute, $attributeContents): string {
             return $this->cleanAttribute($fullAttribute, $attributeContents);
@@ -86,7 +86,7 @@ class AttributeCleaner implements FilterInterface
      * @param string $fullAttribute (e.g. 'href="javascript:alert('XSS');"')
      * @param string $attributeContents (e.g. 'javascript:alert('XSS');')
      */
-    protected function cleanAttribute(string $fullAttribute, string $attributeContents): string
+    private function cleanAttribute(string $fullAttribute, string $attributeContents): string
     {
         // decode entities, compact words etc.
         $cleanedContents = $this->attributeContentCleaner->filter($attributeContents);
@@ -98,7 +98,7 @@ class AttributeCleaner implements FilterInterface
         return $fullAttribute;
     }
 
-    protected function buildContentRegex(): string
+    private function buildContentRegex(): string
     {
         $dangerous = [
             'javascript:',

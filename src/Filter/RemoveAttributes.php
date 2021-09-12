@@ -16,12 +16,12 @@ class RemoveAttributes implements FilterInterface
     /**
      * @var TagFinder\ByAttribute
      */
-    protected $tagFinder;
+    private $tagFinder;
 
     /**
      * @var AttributeFinder
      */
-    protected $attributeFinder;
+    private $attributeFinder;
 
     public function __construct()
     {
@@ -71,7 +71,7 @@ class RemoveAttributes implements FilterInterface
      * @param string $fullTag (e.g. '<a onclick="alert('XSS');">')
      * @param string $attributes (e.g. 'a onclick="alert('XSS');"')
      */
-    protected function removeAttribute(string $fullTag, string $attributes): string
+    private function removeAttribute(string $fullTag, string $attributes): string
     {
         $replacement = $this->attributeFinder->findAttributes($attributes, function (): string {
             return '';

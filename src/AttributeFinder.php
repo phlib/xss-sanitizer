@@ -12,17 +12,17 @@ class AttributeFinder
     /**
      * @var array
      */
-    protected $attributes;
+    private $attributes;
 
     /**
      * @var string
      */
-    protected $optimisticSearchRegex;
+    private $optimisticSearchRegex;
 
     /**
      * @var string
      */
-    protected $pessimisticSearchRegex;
+    private $pessimisticSearchRegex;
 
     /**
      * @param string|string[] $attributes
@@ -71,7 +71,7 @@ class AttributeFinder
      * This allows us to ignore cases where an attribute name appears in the context of an attribute value
      * when we know that the attribute is well formed
      */
-    protected function findAttributesOptimistic(string &$attributes, callable $callback, array &$filtered): void
+    private function findAttributesOptimistic(string &$attributes, callable $callback, array &$filtered): void
     {
         while (preg_match($this->optimisticSearchRegex, $attributes, $matches)) {
             $attributes = substr($attributes, strlen($matches[0]));
@@ -85,7 +85,7 @@ class AttributeFinder
         }
     }
 
-    protected function initOptimisticSearchRegex(): string
+    private function initOptimisticSearchRegex(): string
     {
         return implode('', [
             '#',
@@ -109,7 +109,7 @@ class AttributeFinder
      * Here, we aren't too bothered about false positives; we want to make sure we catch all and any possibilities
      * of the attribute appearing, which may include occurances within an attribute value
      */
-    protected function findAttributesPessimistic(string $attributes, callable $callback, array &$filtered): void
+    private function findAttributesPessimistic(string $attributes, callable $callback, array &$filtered): void
     {
         $filtered[] = preg_replace_callback(
             $this->pessimisticSearchRegex,
@@ -125,7 +125,7 @@ class AttributeFinder
         );
     }
 
-    protected function initPessimisticSearchRegex(array $attributes): string
+    private function initPessimisticSearchRegex(array $attributes): string
     {
         $attributes = '(?:' . implode('|', $attributes) . ')';
         return implode('', [

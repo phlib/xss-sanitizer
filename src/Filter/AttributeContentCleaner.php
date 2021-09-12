@@ -17,7 +17,7 @@ class AttributeContentCleaner implements FilterInterface
     /**
      * @var FilterInterface[]
      */
-    protected $filters;
+    private $filters;
 
     public function __construct()
     {
@@ -38,7 +38,7 @@ class AttributeContentCleaner implements FilterInterface
         return $this->runFilters($str, $this->filters);
     }
 
-    protected function initFilters(): void
+    private function initFilters(): void
     {
         $this->filters = [
             new AttributeContent\DecodeUtf8(),

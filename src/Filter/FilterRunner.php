@@ -17,7 +17,7 @@ class FilterRunner implements FilterInterface
     /**
      * @var FilterInterface[]
      */
-    protected $filters;
+    private $filters;
 
     /**
      * @param FilterInterface|FilterInterface[] $filters

@@ -16,9 +16,9 @@ class AttributeCleanerTest extends TestCase
     /**
      * @var FilterInterface
      */
-    protected $cleaner;
+    private $cleaner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $cleaner = $this->createMock(FilterInterface::class);
         $cleaner->method('filter')

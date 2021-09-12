@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Use SemVer for dependency versions. This effectively removes unintended
   support for PHP v8, as this package has only been tested for PHP v5.5 - v7.1.
+- **BC break**: Reduce visibility of internal methods and properties. These
+  members are not part of the public API. No impact to standard use of this
+  package. If an implementation has a use case which needs to override these
+  members, please submit a pull request explaining the change.
 ### Removed
 - **BC break**: Removed support for PHP versions < v7.1 as they are no longer
   [actively supported](https://php.net/supported-versions.php) by the PHP project.

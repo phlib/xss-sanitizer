@@ -14,7 +14,7 @@ class Sanitizer
     /**
      * @var FilterInterface[]
      */
-    protected $filters;
+    private $filters;
 
     public function __construct()
     {
@@ -43,7 +43,7 @@ class Sanitizer
         return $strings;
     }
 
-    protected function initFilters(): void
+    private function initFilters(): void
     {
         $this->filters = [];
 

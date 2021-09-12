@@ -14,7 +14,7 @@ class CompactExplodedWords implements FilterInterface
     /**
      * @var string
      */
-    protected $wordsRegex;
+    private $wordsRegex;
 
     public function __construct()
     {
@@ -42,7 +42,7 @@ class CompactExplodedWords implements FilterInterface
         return $str;
     }
 
-    protected function buildWordsRegex(): string
+    private function buildWordsRegex(): string
     {
         $rawWords = [
             'javascript',

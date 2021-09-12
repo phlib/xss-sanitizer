@@ -15,7 +15,7 @@ trait FilterRunnerTrait
      *
      * @param FilterInterface[] $filters
      */
-    protected function runFilters(string $str, array $filters): string
+    private function runFilters(string $str, array $filters): string
     {
         do {
             $pre = $str;
@@ -30,7 +30,7 @@ trait FilterRunnerTrait
      *
      * @param FilterInterface[] $filters
      */
-    protected function applyEachFilter(string $str, array $filters): string
+    private function applyEachFilter(string $str, array $filters): string
     {
         foreach ($filters as $filter) {
             $str = $filter->filter($str);

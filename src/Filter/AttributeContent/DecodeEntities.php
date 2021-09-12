@@ -14,7 +14,7 @@ class DecodeEntities implements FilterInterface
     /**
      * @var string
      */
-    protected $entityRegex;
+    private $entityRegex;
 
     public function __construct()
     {
@@ -46,7 +46,7 @@ class DecodeEntities implements FilterInterface
         return $str;
     }
 
-    protected function buildEntityRegex(): string
+    private function buildEntityRegex(): string
     {
         return implode('', [
             '/',

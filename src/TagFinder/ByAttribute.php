@@ -14,7 +14,7 @@ class ByAttribute implements TagFinderInterface
     /**
      * @var string
      */
-    protected $initialSearchRegex;
+    private $initialSearchRegex;
 
     /**
      * @param string|string[] $attributes
@@ -64,7 +64,7 @@ class ByAttribute implements TagFinderInterface
     /**
      * @param string|string[] $attributes
      */
-    protected function initInitialSearchRegex($attributes): string
+    private function initInitialSearchRegex($attributes): string
     {
         if (is_array($attributes)) {
             $attributes = '(?:' . implode('|', $attributes) . ')';
@@ -86,7 +86,7 @@ class ByAttribute implements TagFinderInterface
      * If the start of the tag is found, returns the matches array with the full tag start and attributes start
      * If not found, returns null
      */
-    protected function findStartOfTag(string $beforeStr): ?array
+    private function findStartOfTag(string $beforeStr): ?array
     {
         // Searching backwards from the found attribute
         $startTag = preg_match('#^([^>]+)[a-z]<#si', strrev($beforeStr), $matches);
@@ -103,7 +103,7 @@ class ByAttribute implements TagFinderInterface
      * If the end of the tag is found, returns the matches array with the full tag end and attributes end
      * If not found, returns null
      */
-    protected function findEndOfTag(string $afterStr): ?array
+    private function findEndOfTag(string $afterStr): ?array
     {
         $endTag = preg_match('#^([^>]+)>#si', $afterStr, $matches);
         if (!$endTag) {

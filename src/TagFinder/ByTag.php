@@ -14,7 +14,7 @@ class ByTag implements TagFinderInterface
     /**
      * @var string
      */
-    protected $searchRegex;
+    private $searchRegex;
 
     /**
      * @param string|string[] $tags
@@ -52,7 +52,7 @@ class ByTag implements TagFinderInterface
     /**
      * @param string|string[] $tags
      */
-    protected function initSearchRegex($tags): string
+    private function initSearchRegex($tags): string
     {
         if (is_array($tags)) {
             $tags = '(?:' . implode('|', $tags) . ')';
