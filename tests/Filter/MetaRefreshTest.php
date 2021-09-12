@@ -4,11 +4,12 @@ namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\MetaRefresh;
 use Phlib\XssSanitizer\FilterInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class MetaRefreshTest extends \PHPUnit_Framework_TestCase
+class MetaRefreshTest extends TestCase
 {
     /**
      * @var FilterInterface
@@ -17,14 +18,13 @@ class MetaRefreshTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $cleaner = $this->getMock(FilterInterface::class);
-        $cleaner->expects($this->any())
-            ->method('filter')
-            ->will($this->returnCallback(function ($str) {
+        $cleaner = $this->createMock(FilterInterface::class);
+        $cleaner->method('filter')
+            ->willReturnCallback(function ($str) {
                 $str = str_ireplace('re fresh', 'refresh', $str);
                 $str = str_ireplace('re&#115;fresh', 'refresh', $str);
                 return $str;
-            }));
+            });
         $this->cleaner = $cleaner;
     }
 
@@ -36,7 +36,7 @@ class MetaRefreshTest extends \PHPUnit_Framework_TestCase
     public function testRemoveMeta($original, $expected)
     {
         $actual = (new MetaRefresh($this->cleaner))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function removeMetaDataProvider()

@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\RemoveAttributes;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
+class RemoveAttributesTest extends TestCase
 {
     /**
      * @dataProvider removeAttributesDataProvider
@@ -17,7 +18,7 @@ class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
     public function testRemoveAttributes($original, $expected)
     {
         $actual = (new RemoveAttributes())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function removeAttributesDataProvider()

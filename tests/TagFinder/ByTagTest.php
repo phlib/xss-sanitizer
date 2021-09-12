@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\TagFinder;
 
 use Phlib\XssSanitizer\TagFinder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class ByTagTest extends \PHPUnit_Framework_TestCase
+class ByTagTest extends TestCase
 {
     public function testFindTagsCallbackArgs()
     {

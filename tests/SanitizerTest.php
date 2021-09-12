@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test;
 
 use Phlib\XssSanitizer\Sanitizer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class SanitizerTest extends \PHPUnit_Framework_TestCase
+class SanitizerTest extends TestCase
 {
     /**
      * @dataProvider sanitizeDataProvider
@@ -17,7 +18,7 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
     public function testSanitize($original, $expected)
     {
         $actual = (new Sanitizer())->sanitize($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function sanitizeDataProvider()
@@ -74,6 +75,6 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
 
         $actual = (new Sanitizer())->sanitizeArray($strings);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 }

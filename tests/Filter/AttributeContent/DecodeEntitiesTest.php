@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeEntities;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class DecodeEntitiesTest extends \PHPUnit_Framework_TestCase
+class DecodeEntitiesTest extends TestCase
 {
     /**
      * @dataProvider decodeDataProvider
@@ -17,7 +18,7 @@ class DecodeEntitiesTest extends \PHPUnit_Framework_TestCase
     public function testDecode($original, $expected)
     {
         $actual = (new DecodeEntities())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function decodeDataProvider()

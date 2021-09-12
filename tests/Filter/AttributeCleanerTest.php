@@ -4,11 +4,12 @@ namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\AttributeCleaner;
 use Phlib\XssSanitizer\FilterInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib/XssSanitiser
  */
-class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
+class AttributeCleanerTest extends TestCase
 {
     /**
      * @var FilterInterface
@@ -17,14 +18,13 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $cleaner = $this->getMock(FilterInterface::class);
-        $cleaner->expects($this->any())
-            ->method('filter')
-            ->will($this->returnCallback(function ($str) {
+        $cleaner = $this->createMock(FilterInterface::class);
+        $cleaner->method('filter')
+            ->willReturnCallback(function ($str) {
                 $str = str_ireplace('java script', 'javascript', $str);
                 $str = str_ireplace('java&#115;cript', 'javascript', $str);
                 return $str;
-            }));
+            });
         $this->cleaner = $cleaner;
     }
 
@@ -36,7 +36,7 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
     public function testCleanLinkHref($original, $expected)
     {
         $actual = (new AttributeCleaner('href', $this->cleaner, ['a', 'link']))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function cleanLinkHrefDataProvider()
@@ -79,7 +79,7 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
     public function testCleanImgSrc($original, $expected)
     {
         $actual = (new AttributeCleaner('src', $this->cleaner, 'img'))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function cleanImgSrcDataProvider()
@@ -103,7 +103,7 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
     public function testCleanBackgroundAnyTag($original, $expected)
     {
         $actual = (new AttributeCleaner('background', $this->cleaner))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function cleanBackgroundAnyTagDataProvider()

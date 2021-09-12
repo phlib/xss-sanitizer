@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeUtf8;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class DecodeUtf8Test extends \PHPUnit_Framework_TestCase
+class DecodeUtf8Test extends TestCase
 {
     /**
      * @dataProvider decodeDataProvider
@@ -17,7 +18,7 @@ class DecodeUtf8Test extends \PHPUnit_Framework_TestCase
     public function testDecode($original, $expected)
     {
         $actual = (new DecodeUtf8())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function decodeDataProvider()

@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\CompactExplodedWords;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class CompactExplodedWordsTest extends \PHPUnit_Framework_TestCase
+class CompactExplodedWordsTest extends TestCase
 {
     /**
      * @dataProvider filterDataProvider
@@ -17,7 +18,7 @@ class CompactExplodedWordsTest extends \PHPUnit_Framework_TestCase
     public function testFilter($original, $expected)
     {
         $actual = (new CompactExplodedWords())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function filterDataProvider()

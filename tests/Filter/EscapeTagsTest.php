@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\EscapeTags;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class EscapeTagsTest extends \PHPUnit_Framework_TestCase
+class EscapeTagsTest extends TestCase
 {
     /**
      * @dataProvider escapeTagsDataProvider
@@ -17,7 +18,7 @@ class EscapeTagsTest extends \PHPUnit_Framework_TestCase
     public function testEscapeTags($original, $expected)
     {
         $actual = (new EscapeTags('script'))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function escapeTagsDataProvider()

@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\TagFinder;
 
 use Phlib\XssSanitizer\TagFinder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class ByAttributeTest extends \PHPUnit_Framework_TestCase
+class ByAttributeTest extends TestCase
 {
     public function testFindTagsCallbackArgs()
     {
@@ -17,8 +18,8 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
         $expectedFullTag = '<a title="something">';
         $expectedAttributes = ' title="something"';
         $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes) {
-            $this->assertEquals($expectedFullTag, $fullTag);
-            $this->assertEquals($expectedAttributes, $attributes);
+            static::assertEquals($expectedFullTag, $fullTag);
+            static::assertEquals($expectedAttributes, $attributes);
         };
         $tagFinder->findTags($str, $callback);
     }
@@ -38,8 +39,8 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
         };
         $tagFinder->findTags($str, $callback);
 
-        $this->assertEquals(2, count($actualFullTags));
-        $this->assertEquals($expectedFullTags, $actualFullTags);
+        static::assertCount(2, $actualFullTags);
+        static::assertEquals($expectedFullTags, $actualFullTags);
     }
 
     /**
@@ -57,7 +58,7 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
         };
         $actual = $tagFinder->findTags($str, $replacer);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function findTagsReplacementDataProvider()

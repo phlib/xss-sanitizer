@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\AttributeContentCleaner;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class AttributeContentCleanerTest extends \PHPUnit_Framework_TestCase
+class AttributeContentCleanerTest extends TestCase
 {
     /**
      * @dataProvider cleanAttributeContentDataProvider
@@ -17,7 +18,7 @@ class AttributeContentCleanerTest extends \PHPUnit_Framework_TestCase
     public function testCleanAttributeContent($original, $expected)
     {
         $actual = (new AttributeContentCleaner())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function cleanAttributeContentDataProvider()

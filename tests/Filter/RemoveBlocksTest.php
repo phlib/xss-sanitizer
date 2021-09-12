@@ -3,11 +3,12 @@
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\RemoveBlocks;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class RemoveBlocksTest extends \PHPUnit_Framework_TestCase
+class RemoveBlocksTest extends TestCase
 {
     /**
      * @dataProvider removeBlocksDataProvider
@@ -17,7 +18,7 @@ class RemoveBlocksTest extends \PHPUnit_Framework_TestCase
     public function testRemoveBlocks($original, $expected)
     {
         $actual = (new RemoveBlocks('script'))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function removeBlocksDataProvider()
