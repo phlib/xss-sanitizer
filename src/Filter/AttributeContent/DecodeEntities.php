@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -26,15 +28,12 @@ class DecodeEntities implements FilterInterface
      *     java&#115;cript:alert('XSS');
      * becomes
      *     javascript:alert('XSS');
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         $str = preg_replace_callback(
             $this->entityRegex,
-            function ($matches) {
+            function ($matches): string {
                 if ($matches[1]) {
                     $entity = "&#{$matches[1]};";
                 } else {
@@ -47,12 +46,7 @@ class DecodeEntities implements FilterInterface
         return $str;
     }
 
-    /**
-     * Build the regex for finding entities in the attribute content
-     *
-     * @return string
-     */
-    protected function buildEntityRegex()
+    protected function buildEntityRegex(): string
     {
         return implode('', [
             '/',

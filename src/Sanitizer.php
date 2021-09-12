@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer;
 
 /**
@@ -19,13 +21,7 @@ class Sanitizer
         $this->initFilters();
     }
 
-    /**
-     * Sanitize a HTML string
-     *
-     * @param string $str
-     * @return string
-     */
-    public function sanitize($str)
+    public function sanitize(string $str): string
     {
         $str = $this->runFilters($str, $this->filters);
 
@@ -38,7 +34,7 @@ class Sanitizer
      * @param string[] $strings
      * @return string[]
      */
-    public function sanitizeArray(array $strings)
+    public function sanitizeArray(array $strings): array
     {
         foreach ($strings as &$str) {
             $str = $this->sanitize($str);
@@ -47,10 +43,7 @@ class Sanitizer
         return $strings;
     }
 
-    /**
-     * Create the filters and add to the filters array
-     */
-    protected function initFilters()
+    protected function initFilters(): void
     {
         $this->filters = [];
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -15,7 +17,6 @@ class EscapeTags implements FilterInterface
     protected $searchRegex;
 
     /**
-     * EscapeTags constructor
      * @param string|string[] $tags
      */
     public function __construct($tags)
@@ -30,11 +31,8 @@ class EscapeTags implements FilterInterface
      *     <script type="text/javascript">alert('XSS');</script>
      * becomes
      *     &lt;script type="text/javascript">alert('XSS');&lt;/script>
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         $str = preg_replace($this->searchRegex, '&lt;\1', $str);
 
@@ -42,12 +40,9 @@ class EscapeTags implements FilterInterface
     }
 
     /**
-     * Build the search regex based on the tags specified
-     *
      * @param string|string[] $tags
-     * @return string
      */
-    protected function initSearchRegex($tags)
+    protected function initSearchRegex($tags): string
     {
         if (is_array($tags)) {
             $tags = '(?:' . implode('|', $tags) . ')';

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer;
 
 /**
@@ -8,11 +10,5 @@ namespace Phlib\XssSanitizer;
  */
 interface FilterInterface
 {
-    /**
-     * Apply this filter to the string, returning the filtered string
-     *
-     * @param string $str
-     * @return string
-     */
-    public function filter($str);
+    public function filter(string $str): string;
 }

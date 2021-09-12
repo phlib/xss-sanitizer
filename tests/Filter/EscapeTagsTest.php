@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\EscapeTags;
@@ -12,16 +14,14 @@ class EscapeTagsTest extends TestCase
 {
     /**
      * @dataProvider escapeTagsDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testEscapeTags($original, $expected)
+    public function testEscapeTags(string $original, string $expected): void
     {
         $actual = (new EscapeTags('script'))->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function escapeTagsDataProvider()
+    public function escapeTagsDataProvider(): array
     {
         return [
             ['<body><script>alert(\'XSS\');</script></body>', '<body>&lt;script>alert(\'XSS\');&lt;/script></body>'],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\AttributeCleaner;
@@ -16,11 +18,11 @@ class AttributeCleanerTest extends TestCase
      */
     protected $cleaner;
 
-    public function setUp()
+    public function setUp(): void
     {
         $cleaner = $this->createMock(FilterInterface::class);
         $cleaner->method('filter')
-            ->willReturnCallback(function ($str) {
+            ->willReturnCallback(function ($str): string {
                 $str = str_ireplace('java script', 'javascript', $str);
                 $str = str_ireplace('java&#115;cript', 'javascript', $str);
                 return $str;
@@ -30,16 +32,14 @@ class AttributeCleanerTest extends TestCase
 
     /**
      * @dataProvider cleanLinkHrefDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testCleanLinkHref($original, $expected)
+    public function testCleanLinkHref(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('href', $this->cleaner, ['a', 'link']))->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function cleanLinkHrefDataProvider()
+    public function cleanLinkHrefDataProvider(): array
     {
         return [
             ['<a href="javascript:alert(\'XSS\')">', '<a >'],
@@ -73,16 +73,14 @@ class AttributeCleanerTest extends TestCase
 
     /**
      * @dataProvider cleanImgSrcDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testCleanImgSrc($original, $expected)
+    public function testCleanImgSrc(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('src', $this->cleaner, 'img'))->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function cleanImgSrcDataProvider()
+    public function cleanImgSrcDataProvider(): array
     {
         return [
             ['<img src="javascript:alert(\'XSS\')">', '<img >'],
@@ -97,16 +95,14 @@ class AttributeCleanerTest extends TestCase
 
     /**
      * @dataProvider cleanBackgroundAnyTagDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testCleanBackgroundAnyTag($original, $expected)
+    public function testCleanBackgroundAnyTag(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('background', $this->cleaner))->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function cleanBackgroundAnyTagDataProvider()
+    public function cleanBackgroundAnyTagDataProvider(): array
     {
         return [
             ['<div background="javascript:alert(\'XSS\')">', '<div >'],

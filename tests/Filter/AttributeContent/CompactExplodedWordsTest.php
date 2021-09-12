@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\CompactExplodedWords;
@@ -12,16 +14,14 @@ class CompactExplodedWordsTest extends TestCase
 {
     /**
      * @dataProvider filterDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testFilter($original, $expected)
+    public function testFilter(string $original, string $expected): void
     {
         $actual = (new CompactExplodedWords())->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function filterDataProvider()
+    public function filterDataProvider(): array
     {
         return [
             ['j a v a s c r i p t:alert(document.cookie);', 'javascript:alert(document.cookie);'],

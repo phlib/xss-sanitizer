@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\TagFinder;
 
 use Phlib\XssSanitizer\TagFinderInterface;
@@ -15,7 +17,6 @@ class ByAttribute implements TagFinderInterface
     protected $initialSearchRegex;
 
     /**
-     * ByAttribute constructor
      * @param string|string[] $attributes
      */
     public function __construct($attributes)
@@ -26,11 +27,8 @@ class ByAttribute implements TagFinderInterface
     /**
      * Given a full html string, finds the required tags by attribute and calls the callback,
      * providing the full tag string and the attributes string
-     *
-     * @param string $str
-     * @return string
      */
-    public function findTags($str, callable $callback)
+    public function findTags(string $str, callable $callback): string
     {
         $searchOffset = 0;
         while (preg_match($this->initialSearchRegex, $str, $matches, PREG_OFFSET_CAPTURE, $searchOffset)) {
@@ -64,12 +62,9 @@ class ByAttribute implements TagFinderInterface
     }
 
     /**
-     * Build the search regex based on the attributes specified
-     *
      * @param string|string[] $attributes
-     * @return string
      */
-    protected function initInitialSearchRegex($attributes)
+    protected function initInitialSearchRegex($attributes): string
     {
         if (is_array($attributes)) {
             $attributes = '(?:' . implode('|', $attributes) . ')';
@@ -90,11 +85,8 @@ class ByAttribute implements TagFinderInterface
      *
      * If the start of the tag is found, returns the matches array with the full tag start and attributes start
      * If not found, returns null
-     *
-     * @param string $beforeStr
-     * @return array|null
      */
-    protected function findStartOfTag($beforeStr)
+    protected function findStartOfTag(string $beforeStr): ?array
     {
         // Searching backwards from the found attribute
         $startTag = preg_match('#^([^>]+)[a-z]<#si', strrev($beforeStr), $matches);
@@ -110,11 +102,8 @@ class ByAttribute implements TagFinderInterface
      *
      * If the end of the tag is found, returns the matches array with the full tag end and attributes end
      * If not found, returns null
-     *
-     * @param string $afterStr
-     * @return array|null
      */
-    protected function findEndOfTag($afterStr)
+    protected function findEndOfTag(string $afterStr): ?array
     {
         $endTag = preg_match('#^([^>]+)>#si', $afterStr, $matches);
         if (!$endTag) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\AttributeFinder;
@@ -33,12 +35,9 @@ class AttributeCleaner implements FilterInterface
     protected $attributeContentCleaner;
 
     /**
-     * AttributeCleaner constructor
-     *
-     * @param string $attribute
      * @param string|string[]|null $tags
      */
-    public function __construct($attribute, FilterInterface $attributeContentCleaner, $tags = null)
+    public function __construct(string $attribute, FilterInterface $attributeContentCleaner, $tags = null)
     {
         $this->tagFinder = $tags ? new TagFinder\ByTag($tags) : new TagFinder\ByAttribute($attribute);
         $this->attrFinder = new AttributeFinder($attribute);
@@ -56,13 +55,10 @@ class AttributeCleaner implements FilterInterface
      *     <a href="javascript:alert('XSS');">
      * should become
      *     <a >
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
-        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes): string {
             return $this->cleanAttributes($fullTag, $attributes);
         });
 
@@ -74,11 +70,10 @@ class AttributeCleaner implements FilterInterface
      *
      * @param string $fullTag (e.g. '<a href="javascript:alert('XSS');">')
      * @param string $attributes (e.g. 'a href="javascript:alert('XSS');"')
-     * @return string
      */
-    protected function cleanAttributes($fullTag, $attributes)
+    protected function cleanAttributes(string $fullTag, string $attributes): string
     {
-        $replacement = $this->attrFinder->findAttributes($attributes, function ($fullAttribute, $attributeContents) {
+        $replacement = $this->attrFinder->findAttributes($attributes, function ($fullAttribute, $attributeContents): string {
             return $this->cleanAttribute($fullAttribute, $attributeContents);
         });
 
@@ -90,9 +85,8 @@ class AttributeCleaner implements FilterInterface
      *
      * @param string $fullAttribute (e.g. 'href="javascript:alert('XSS');"')
      * @param string $attributeContents (e.g. 'javascript:alert('XSS');')
-     * @return string
      */
-    protected function cleanAttribute($fullAttribute, $attributeContents)
+    protected function cleanAttribute(string $fullAttribute, string $attributeContents): string
     {
         // decode entities, compact words etc.
         $cleanedContents = $this->attributeContentCleaner->filter($attributeContents);
@@ -104,12 +98,7 @@ class AttributeCleaner implements FilterInterface
         return $fullAttribute;
     }
 
-    /**
-     * Build the regex for finding potential exploits in the attribute content
-     *
-     * @return string
-     */
-    protected function buildContentRegex()
+    protected function buildContentRegex(): string
     {
         $dangerous = [
             'javascript:',

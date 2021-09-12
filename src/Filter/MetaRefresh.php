@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\AttributeFinder;
@@ -41,13 +43,10 @@ class MetaRefresh implements FilterInterface
      * e.g.
      *     <meta http-equiv="refresh" content="0;url=javascript:alert('XSS');">
      * would be removed
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
-        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes): string {
             return $this->cleanTag($fullTag, $attributes);
         });
         return $str;
@@ -58,9 +57,8 @@ class MetaRefresh implements FilterInterface
      *
      * @param string $fullTag (e.g. '<meta http-equiv="refresh">')
      * @param string $attributes (e.g. 'meta http-equiv="refresh"')
-     * @return string
      */
-    protected function cleanTag($fullTag, $attributes)
+    protected function cleanTag(string $fullTag, string $attributes): string
     {
         $isRefreshTag = false;
 

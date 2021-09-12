@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -30,19 +32,13 @@ class AttributeContentCleaner implements FilterInterface
      *     \u006A a v a &#115; c r i p t:alert('XSS');
      * should become
      *     javascript:alert('XSS');
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         return $this->runFilters($str, $this->filters);
     }
 
-    /**
-     * Create the filters and add to the filters array
-     */
-    protected function initFilters()
+    protected function initFilters(): void
     {
         $this->filters = [
             new AttributeContent\DecodeUtf8(),

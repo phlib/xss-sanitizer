@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\AttributeFinder;
@@ -53,13 +55,10 @@ class RemoveAttributes implements FilterInterface
      *
      * This includes event handler attributes ('onload', 'onclick' etc.)
      * e.g. '<body onload="alert('XSS');">'
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
-        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes): string {
             return $this->removeAttribute($fullTag, $attributes);
         });
 
@@ -71,11 +70,10 @@ class RemoveAttributes implements FilterInterface
      *
      * @param string $fullTag (e.g. '<a onclick="alert('XSS');">')
      * @param string $attributes (e.g. 'a onclick="alert('XSS');"')
-     * @return string
      */
-    protected function removeAttribute($fullTag, $attributes)
+    protected function removeAttribute(string $fullTag, string $attributes): string
     {
-        $replacement = $this->attributeFinder->findAttributes($attributes, function () {
+        $replacement = $this->attributeFinder->findAttributes($attributes, function (): string {
             return '';
         });
 

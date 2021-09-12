@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\RemoveAttributes;
@@ -12,16 +14,14 @@ class RemoveAttributesTest extends TestCase
 {
     /**
      * @dataProvider removeAttributesDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testRemoveAttributes($original, $expected)
+    public function testRemoveAttributes(string $original, string $expected): void
     {
         $actual = (new RemoveAttributes())->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function removeAttributesDataProvider()
+    public function removeAttributesDataProvider(): array
     {
         return [
             ['<body onload="alert(document.cookie);">', '<body >'],

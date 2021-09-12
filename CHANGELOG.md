@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Type declarations have been added to all method parameters and return types
+  where possible.
 - Add explicit dependency for `mbstring` PHP extension. This has always been
   required, but not previously listed in the platform dependencies.
 ### Changed

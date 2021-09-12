@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer;
 
 /**
@@ -21,9 +23,6 @@ interface TagFinderInterface
      *     $fullTag:    '<img src="something">'
      *     $attributes: ' src="something"'
      * and the return from the callback would replace the $fullTag in the original string
-     *
-     * @param string $str
-     * @return string
      */
-    public function findTags($str, callable $callback);
+    public function findTags(string $str, callable $callback): string;
 }

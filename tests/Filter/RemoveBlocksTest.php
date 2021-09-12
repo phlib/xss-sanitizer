@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\RemoveBlocks;
@@ -12,16 +14,14 @@ class RemoveBlocksTest extends TestCase
 {
     /**
      * @dataProvider removeBlocksDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testRemoveBlocks($original, $expected)
+    public function testRemoveBlocks(string $original, string $expected): void
     {
         $actual = (new RemoveBlocks('script'))->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function removeBlocksDataProvider()
+    public function removeBlocksDataProvider(): array
     {
         return [
             ['<body><script>alert(\'XSS\');</script></body>', '<body></body>'],

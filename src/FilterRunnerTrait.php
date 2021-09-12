@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer;
 
 /**
@@ -11,11 +13,9 @@ trait FilterRunnerTrait
     /**
      * Run the filters repeatedly until they no longer change the string
      *
-     * @param string $str
      * @param FilterInterface[] $filters
-     * @return string
      */
-    protected function runFilters($str, $filters)
+    protected function runFilters(string $str, array $filters): string
     {
         do {
             $pre = $str;
@@ -28,11 +28,9 @@ trait FilterRunnerTrait
     /**
      * Apply each filter in the filters array
      *
-     * @param string $str
      * @param FilterInterface[] $filters
-     * @return string
      */
-    protected function applyEachFilter($str, $filters)
+    protected function applyEachFilter(string $str, array $filters): string
     {
         foreach ($filters as $filter) {
             $str = $filter->filter($str);

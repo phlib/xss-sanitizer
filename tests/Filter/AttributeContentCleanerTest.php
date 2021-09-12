@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\AttributeContentCleaner;
@@ -12,16 +14,14 @@ class AttributeContentCleanerTest extends TestCase
 {
     /**
      * @dataProvider cleanAttributeContentDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testCleanAttributeContent($original, $expected)
+    public function testCleanAttributeContent(string $original, string $expected): void
     {
         $actual = (new AttributeContentCleaner())->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function cleanAttributeContentDataProvider()
+    public function cleanAttributeContentDataProvider(): array
     {
         return [
             ['java&#115;cript:alert(document.cookie)', 'javascript:alert(document.cookie)'],

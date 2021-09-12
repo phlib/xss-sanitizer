@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeUtf8;
@@ -12,16 +14,14 @@ class DecodeUtf8Test extends TestCase
 {
     /**
      * @dataProvider decodeDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testDecode($original, $expected)
+    public function testDecode(string $original, string $expected): void
     {
         $actual = (new DecodeUtf8())->filter($original);
         static::assertEquals($expected, $actual);
     }
 
-    public function decodeDataProvider()
+    public function decodeDataProvider(): array
     {
         return [
             ['xx \u006a xx', 'xx j xx'],
