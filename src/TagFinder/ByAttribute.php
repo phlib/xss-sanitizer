@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\TagFinder;
 use Phlib\XssSanitizer\TagFinderInterface;
 
 /**
- * Class ByAttribute
- * @package Phlib\XssSanitizer\TagFinder
+ * @package Phlib\XssSanitizer
  */
 class ByAttribute implements TagFinderInterface
 {

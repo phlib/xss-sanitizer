@@ -6,8 +6,7 @@ use Phlib\XssSanitizer\Filter\MetaRefresh;
 use Phlib\XssSanitizer\FilterInterface;
 
 /**
- * Class MetaRefreshTest
- * @package Phlib\XssSanitizer\Test\Filter
+ * @package Phlib\XssSanitizer
  */
 class MetaRefreshTest extends \PHPUnit_Framework_TestCase
 {

@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Filter;
 use Phlib\XssSanitizer\FilterInterface;
 
 /**
- * Class RemoveBlocks
- * @package Phlib\XssSanitizer\Filter
+ * @package Phlib\XssSanitizer
  */
 class RemoveBlocks implements FilterInterface
 {

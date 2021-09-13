@@ -7,8 +7,7 @@ use Phlib\XssSanitizer\FilterInterface;
 use Phlib\XssSanitizer\FilterRunnerTrait;
 
 /**
- * Class AttributeContentCleaner
- * @package Phlib\XssSanitizer\Filter
+ * @package Phlib\XssSanitizer
  */
 class AttributeContentCleaner implements FilterInterface
 {

@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Test;
 use Phlib\XssSanitizer\Sanitizer;
 
 /**
- * Class SanitizerTest
- * @package Phlib\XssSanitizer\Test
+ * @package Phlib\XssSanitizer
  */
 class SanitizerTest extends \PHPUnit_Framework_TestCase
 {

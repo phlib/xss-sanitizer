@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Test\Filter;
 use Phlib\XssSanitizer\Filter\RemoveAttributes;
 
 /**
- * Class RemoveAttributesTest
- * @package Phlib\XssSanitizer\Test\Filter
+ * @package Phlib\XssSanitizer
  */
 class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
 {

@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeEntities;
 
 /**
- * Class DecodeEntitiesTest
- * @package Phlib\XssSanitizer\Test\Filter\AttributeContents
+ * @package Phlib\XssSanitizer
  */
 class DecodeEntitiesTest extends \PHPUnit_Framework_TestCase
 {

@@ -7,8 +7,7 @@ use Phlib\XssSanitizer\FilterInterface;
 use Phlib\XssSanitizer\TagFinder;
 
 /**
- * Class MetaRefresh
- * @package Phlib\XssSanitizer\Filter
+ * @package Phlib\XssSanitizer
  */
 class MetaRefresh implements FilterInterface
 {

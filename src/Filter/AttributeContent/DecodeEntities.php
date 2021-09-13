@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Filter\AttributeContent;
 use Phlib\XssSanitizer\FilterInterface;
 
 /**
- * Class DecodeEntities
- * @package Phlib\XssSanitizer\Filter\AttributeContent
+ * @package Phlib\XssSanitizer
  */
 class DecodeEntities implements FilterInterface
 {

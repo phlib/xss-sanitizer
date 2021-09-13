@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Test\Filter;
 use Phlib\XssSanitizer\Filter\EscapeTags;
 
 /**
- * Class EscapeTagsTest
- * @package Phlib\XssSanitizer\Test\Filter
+ * @package Phlib\XssSanitizer
  */
 class EscapeTagsTest extends \PHPUnit_Framework_TestCase
 {

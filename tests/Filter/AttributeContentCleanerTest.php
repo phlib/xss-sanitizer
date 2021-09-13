@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Test\Filter;
 use Phlib\XssSanitizer\Filter\AttributeContentCleaner;
 
 /**
- * Class AttributeContentCleanerTest
- * @package Phlib\XssSanitizer\Filter\Test
+ * @package Phlib\XssSanitizer
  */
 class AttributeContentCleanerTest extends \PHPUnit_Framework_TestCase
 {

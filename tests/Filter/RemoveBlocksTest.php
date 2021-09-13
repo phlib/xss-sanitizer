@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Test\Filter;
 use Phlib\XssSanitizer\Filter\RemoveBlocks;
 
 /**
- * Class RemoveBlocksTest
- * @package Phlib\XssSanitizer\Test\Filter
+ * @package Phlib\XssSanitizer
  */
 class RemoveBlocksTest extends \PHPUnit_Framework_TestCase
 {

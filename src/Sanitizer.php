@@ -5,7 +5,6 @@ namespace Phlib\XssSanitizer;
 use Phlib\XssSanitizer\Filter;
 
 /**
- * Class Sanitizer
  * @package Phlib\XssSanitizer
  */
 class Sanitizer

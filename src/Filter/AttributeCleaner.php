@@ -8,8 +8,7 @@ use Phlib\XssSanitizer\TagFinderInterface;
 use Phlib\XssSanitizer\TagFinder;
 
 /**
- * Class AttributeCleaner
- * @package Phlib\XssSanitizer\Filter
+ * @package Phlib\XssSanitizer
  */
 class AttributeCleaner implements FilterInterface
 {

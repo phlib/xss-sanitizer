@@ -6,8 +6,7 @@ use Phlib\XssSanitizer\FilterInterface;
 use Phlib\XssSanitizer\FilterRunnerTrait;
 
 /**
- * Class FilterRunner
- * @package Phlib\XssSanitizer\Filter
+ * @package Phlib\XssSanitizer
  */
 class FilterRunner implements FilterInterface
 {

@@ -3,7 +3,6 @@
 namespace Phlib\XssSanitizer;
 
 /**
- * Class AttributeFinder
  * @package Phlib\XssSanitizer
  */
 class AttributeFinder

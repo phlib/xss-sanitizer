@@ -5,9 +5,7 @@ namespace Phlib\XssSanitizer\Filter;
 use Phlib\XssSanitizer\FilterInterface;
 
 /**
- * Class EscapeTags
- *
- * @package Phlib\XssSanitizer\Filter
+ * @package Phlib\XssSanitizer
  */
 class EscapeTags implements FilterInterface
 {

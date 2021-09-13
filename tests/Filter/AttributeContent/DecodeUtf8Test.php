@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeUtf8;
 
 /**
- * Class DecodeUtf8Test
- * @package Phlib\XssSanitizer\Test\Filter\AttributeContents
+ * @package Phlib\XssSanitizer
  */
 class DecodeUtf8Test extends \PHPUnit_Framework_TestCase
 {

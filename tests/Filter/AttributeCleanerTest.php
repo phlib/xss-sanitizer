@@ -6,10 +6,9 @@ use Phlib\XssSanitizer\Filter\AttributeCleaner;
 use Phlib\XssSanitizer\FilterInterface;
 
 /**
- * Class AttributeCleanerTraitTest
- * @package Phlib\XssSanitizer\Test\Filter
+ * @package Phlib/XssSanitiser
  */
-class AttributeCleanerTraitTest extends \PHPUnit_Framework_TestCase
+class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var FilterInterface

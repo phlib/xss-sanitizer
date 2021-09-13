@@ -1,9 +1,12 @@
 <?php
 
-namespace TagFinder;
+namespace Phlib\XssSanitizer\Test\TagFinder;
 
 use Phlib\XssSanitizer\TagFinder;
 
+/**
+ * @package Phlib\XssSanitizer
+ */
 class ByAttributeTest extends \PHPUnit_Framework_TestCase
 {
     public function testFindTagsCallbackArgs()

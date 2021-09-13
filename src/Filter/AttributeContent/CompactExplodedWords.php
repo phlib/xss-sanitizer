@@ -5,8 +5,7 @@ namespace Phlib\XssSanitizer\Filter\AttributeContent;
 use Phlib\XssSanitizer\FilterInterface;
 
 /**
- * Class CompactExplodedWords
- * @package Phlib\XssSanitizer\Filter\AttributeContent
+ * @package Phlib\XssSanitizer
  */
 class CompactExplodedWords implements FilterInterface
 {
