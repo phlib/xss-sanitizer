@@ -18,7 +18,7 @@ class SanitizerTest extends TestCase
     public function testSanitize(string $original, string $expected): void
     {
         $actual = (new Sanitizer())->sanitize($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function sanitizeDataProvider(): array
@@ -75,6 +75,6 @@ class SanitizerTest extends TestCase
 
         $actual = (new Sanitizer())->sanitizeArray($strings);
 
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 }

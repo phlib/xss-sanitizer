@@ -36,7 +36,7 @@ class AttributeCleanerTest extends TestCase
     public function testCleanLinkHref(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('href', $this->cleaner, ['a', 'link']))->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function cleanLinkHrefDataProvider(): array
@@ -77,7 +77,7 @@ class AttributeCleanerTest extends TestCase
     public function testCleanImgSrc(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('src', $this->cleaner, 'img'))->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function cleanImgSrcDataProvider(): array
@@ -99,7 +99,7 @@ class AttributeCleanerTest extends TestCase
     public function testCleanBackgroundAnyTag(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('background', $this->cleaner))->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function cleanBackgroundAnyTagDataProvider(): array

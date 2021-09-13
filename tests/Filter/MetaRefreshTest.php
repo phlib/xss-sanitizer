@@ -36,7 +36,7 @@ class MetaRefreshTest extends TestCase
     public function testRemoveMeta(string $original, string $expected): void
     {
         $actual = (new MetaRefresh($this->cleaner))->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function removeMetaDataProvider(): array

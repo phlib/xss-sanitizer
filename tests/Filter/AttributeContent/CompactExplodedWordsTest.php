@@ -18,7 +18,7 @@ class CompactExplodedWordsTest extends TestCase
     public function testFilter(string $original, string $expected): void
     {
         $actual = (new CompactExplodedWords())->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function filterDataProvider(): array

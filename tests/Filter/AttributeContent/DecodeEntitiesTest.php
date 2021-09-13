@@ -18,7 +18,7 @@ class DecodeEntitiesTest extends TestCase
     public function testDecode(string $original, string $expected): void
     {
         $actual = (new DecodeEntities())->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function decodeDataProvider(): array

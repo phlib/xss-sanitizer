@@ -18,7 +18,7 @@ class RemoveBlocksTest extends TestCase
     public function testRemoveBlocks(string $original, string $expected): void
     {
         $actual = (new RemoveBlocks('script'))->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function removeBlocksDataProvider(): array

@@ -20,8 +20,8 @@ class ByAttributeTest extends TestCase
         $expectedFullTag = '<a title="something">';
         $expectedAttributes = ' title="something"';
         $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes): string {
-            static::assertEquals($expectedFullTag, $fullTag);
-            static::assertEquals($expectedAttributes, $attributes);
+            static::assertSame($expectedFullTag, $fullTag);
+            static::assertSame($expectedAttributes, $attributes);
             return '';
         };
         $tagFinder->findTags($str, $callback);
@@ -44,7 +44,7 @@ class ByAttributeTest extends TestCase
         $tagFinder->findTags($str, $callback);
 
         static::assertCount(2, $actualFullTags);
-        static::assertEquals($expectedFullTags, $actualFullTags);
+        static::assertSame($expectedFullTags, $actualFullTags);
     }
 
     /**
@@ -59,7 +59,7 @@ class ByAttributeTest extends TestCase
         };
         $actual = $tagFinder->findTags($str, $replacer);
 
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function findTagsReplacementDataProvider(): array

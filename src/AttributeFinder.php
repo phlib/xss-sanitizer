@@ -75,7 +75,7 @@ class AttributeFinder
     {
         while (preg_match($this->optimisticSearchRegex, $attributes, $matches)) {
             $attributes = substr($attributes, strlen($matches[0]));
-            if (in_array(strtolower($matches[3]), $this->attributes)) {
+            if (in_array(strtolower($matches[3]), $this->attributes, true)) {
                 $replacement = $callback($matches[2], $matches[5]);
             } else {
                 $replacement = $matches[2];

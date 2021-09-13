@@ -18,7 +18,7 @@ class EscapeTagsTest extends TestCase
     public function testEscapeTags(string $original, string $expected): void
     {
         $actual = (new EscapeTags('script'))->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function escapeTagsDataProvider(): array

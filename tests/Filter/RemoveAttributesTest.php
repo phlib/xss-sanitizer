@@ -18,7 +18,7 @@ class RemoveAttributesTest extends TestCase
     public function testRemoveAttributes(string $original, string $expected): void
     {
         $actual = (new RemoveAttributes())->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function removeAttributesDataProvider(): array

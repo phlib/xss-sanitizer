@@ -18,7 +18,7 @@ class AttributeContentCleanerTest extends TestCase
     public function testCleanAttributeContent(string $original, string $expected): void
     {
         $actual = (new AttributeContentCleaner())->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function cleanAttributeContentDataProvider(): array

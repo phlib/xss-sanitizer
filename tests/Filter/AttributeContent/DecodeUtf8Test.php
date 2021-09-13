@@ -18,7 +18,7 @@ class DecodeUtf8Test extends TestCase
     public function testDecode(string $original, string $expected): void
     {
         $actual = (new DecodeUtf8())->filter($original);
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function decodeDataProvider(): array
