@@ -14,25 +14,13 @@ use Phlib\XssSanitizer\TagFinderInterface;
  */
 class AttributeCleaner implements FilterInterface
 {
-    /**
-     * @var TagFinderInterface
-     */
-    private $tagFinder;
+    private TagFinderInterface $tagFinder;
 
-    /**
-     * @var AttributeFinder
-     */
-    private $attrFinder;
+    private AttributeFinder $attrFinder;
 
-    /**
-     * @var string
-     */
-    private $contentRegex;
+    private string $contentRegex;
 
-    /**
-     * @var FilterInterface
-     */
-    private $attributeContentCleaner;
+    private FilterInterface $attributeContentCleaner;
 
     /**
      * @param string|string[]|null $tags

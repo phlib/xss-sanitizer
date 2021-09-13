@@ -13,15 +13,9 @@ use Phlib\XssSanitizer\TagFinder;
  */
 class RemoveAttributes implements FilterInterface
 {
-    /**
-     * @var TagFinder\ByAttribute
-     */
-    private $tagFinder;
+    private TagFinder\ByAttribute $tagFinder;
 
-    /**
-     * @var AttributeFinder
-     */
-    private $attributeFinder;
+    private AttributeFinder $attributeFinder;
 
     public function __construct()
     {

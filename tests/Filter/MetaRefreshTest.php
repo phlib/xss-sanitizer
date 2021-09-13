@@ -6,6 +6,7 @@ namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\MetaRefresh;
 use Phlib\XssSanitizer\FilterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,9 +15,9 @@ use PHPUnit\Framework\TestCase;
 class MetaRefreshTest extends TestCase
 {
     /**
-     * @var FilterInterface
+     * @var FilterInterface|MockObject
      */
-    private $cleaner;
+    private MockObject $cleaner;
 
     protected function setUp(): void
     {

@@ -11,10 +11,7 @@ use Phlib\XssSanitizer\TagFinderInterface;
  */
 class ByTag implements TagFinderInterface
 {
-    /**
-     * @var string
-     */
-    private $searchRegex;
+    private string $searchRegex;
 
     /**
      * @param string|string[] $tags

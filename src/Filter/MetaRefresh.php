@@ -13,20 +13,11 @@ use Phlib\XssSanitizer\TagFinder;
  */
 class MetaRefresh implements FilterInterface
 {
-    /**
-     * @var TagFinder\ByTag
-     */
-    private $tagFinder;
+    private TagFinder\ByTag $tagFinder;
 
-    /**
-     * @var AttributeFinder
-     */
-    private $attrFinder;
+    private AttributeFinder $attrFinder;
 
-    /**
-     * @var FilterInterface
-     */
-    private $attributeContentCleaner;
+    private FilterInterface $attributeContentCleaner;
 
     public function __construct(FilterInterface $attributeContentCleaner)
     {

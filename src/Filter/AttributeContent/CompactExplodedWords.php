@@ -11,10 +11,7 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class CompactExplodedWords implements FilterInterface
 {
-    /**
-     * @var string
-     */
-    private $wordsRegex;
+    private string $wordsRegex;
 
     public function __construct()
     {

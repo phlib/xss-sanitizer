@@ -9,20 +9,11 @@ namespace Phlib\XssSanitizer;
  */
 class AttributeFinder
 {
-    /**
-     * @var array
-     */
-    private $attributes;
+    private array $attributes;
 
-    /**
-     * @var string
-     */
-    private $optimisticSearchRegex;
+    private string $optimisticSearchRegex;
 
-    /**
-     * @var string
-     */
-    private $pessimisticSearchRegex;
+    private string $pessimisticSearchRegex;
 
     /**
      * @param string|string[] $attributes

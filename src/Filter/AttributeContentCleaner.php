@@ -17,7 +17,7 @@ class AttributeContentCleaner implements FilterInterface
     /**
      * @var FilterInterface[]
      */
-    private $filters;
+    private array $filters;
 
     public function __construct()
     {

@@ -11,10 +11,7 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class RemoveBlocks implements FilterInterface
 {
-    /**
-     * @var string
-     */
-    private $searchRegex;
+    private string $searchRegex;
 
     /**
      * @param string|string[] $tags

@@ -11,10 +11,7 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class DecodeEntities implements FilterInterface
 {
-    /**
-     * @var string
-     */
-    private $entityRegex;
+    private string $entityRegex;
 
     public function __construct()
     {

@@ -14,7 +14,7 @@ class Sanitizer
     /**
      * @var FilterInterface[]
      */
-    private $filters;
+    private array $filters;
 
     public function __construct()
     {
