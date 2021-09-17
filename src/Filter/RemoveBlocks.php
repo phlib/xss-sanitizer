@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -9,13 +11,9 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class RemoveBlocks implements FilterInterface
 {
-    /**
-     * @var string
-     */
-    protected $searchRegex;
+    private string $searchRegex;
 
     /**
-     * RemoveBlocks constructor
      * @param string|string[] $tags
      */
     public function __construct($tags)
@@ -33,11 +31,8 @@ class RemoveBlocks implements FilterInterface
      *     <body><script type="text/javascript">alert('XSS');</script></body>
      * becomes
      *     <body></body>
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         $str = preg_replace($this->searchRegex, '', $str);
 
@@ -45,30 +40,27 @@ class RemoveBlocks implements FilterInterface
     }
 
     /**
-     * Build the search regex based on the tags specified
-     *
      * @param string|string[] $tags
-     * @return string
      */
-    protected function initSearchRegex($tags)
+    private function initSearchRegex($tags): string
     {
         if (is_array($tags)) {
             $tags = '(?:' . implode('|', $tags) . ')';
         }
         return implode('', [
             '#',
-                // open tag
-                '<',
-                '(', $tags, ')',
-                '([^>]*?)',
-                '>',
-                // content
-                '.*?',
-                // closing tag
-                '</',
-                '\1',
-                '([^>]*?)',
-                '(>|$)',
+            // open tag
+            '<',
+            '(', $tags, ')',
+            '([^>]*?)',
+            '>',
+            // content
+            '.*?',
+            // closing tag
+            '</',
+            '\1',
+            '([^>]*?)',
+            '(>|$)',
             '#si',
         ]);
     }

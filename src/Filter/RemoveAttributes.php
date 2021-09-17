@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\AttributeFinder;
@@ -11,20 +13,10 @@ use Phlib\XssSanitizer\TagFinder;
  */
 class RemoveAttributes implements FilterInterface
 {
+    private TagFinder\ByAttribute $tagFinder;
 
-    /**
-     * @var TagFinder\ByAttribute
-     */
-    protected $tagFinder;
+    private AttributeFinder $attributeFinder;
 
-    /**
-     * @var AttributeFinder
-     */
-    protected $attributeFinder;
-
-    /**
-     * RemoveAttributes constructor
-     */
     public function __construct()
     {
         // source: https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Event_Handlers
@@ -48,7 +40,7 @@ class RemoveAttributes implements FilterInterface
             'seeksegmenttime',
         ];
 
-        $this->tagFinder       = new TagFinder\ByAttribute($attributes);
+        $this->tagFinder = new TagFinder\ByAttribute($attributes);
         $this->attributeFinder = new AttributeFinder($attributes);
     }
 
@@ -57,13 +49,10 @@ class RemoveAttributes implements FilterInterface
      *
      * This includes event handler attributes ('onload', 'onclick' etc.)
      * e.g. '<body onload="alert('XSS');">'
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
-        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes): string {
             return $this->removeAttribute($fullTag, $attributes);
         });
 
@@ -75,15 +64,13 @@ class RemoveAttributes implements FilterInterface
      *
      * @param string $fullTag (e.g. '<a onclick="alert('XSS');">')
      * @param string $attributes (e.g. 'a onclick="alert('XSS');"')
-     * @return string
      */
-    protected function removeAttribute($fullTag, $attributes)
+    private function removeAttribute(string $fullTag, string $attributes): string
     {
-        $replacement = $this->attributeFinder->findAttributes($attributes, function() {
+        $replacement = $this->attributeFinder->findAttributes($attributes, function (): string {
             return '';
         });
 
         return str_ireplace($attributes, $replacement, $fullTag);
     }
-
 }

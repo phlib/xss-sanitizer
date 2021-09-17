@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -9,7 +11,6 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class DecodeUtf8 implements FilterInterface
 {
-
     /**
      * Decode UTF-8 encoded characters in an attribute content string
      *
@@ -17,15 +18,12 @@ class DecodeUtf8 implements FilterInterface
      *     \u006Aavascript:alert('XSS');
      * becomes
      *     javascript:alert('XSS');
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         $str = preg_replace_callback(
             '#\\\\u([0-9a-f]{4})#i',
-            function($matches) {
+            function ($matches): string {
                 return mb_convert_encoding(pack('H*', $matches[1]), 'UTF-8', 'UCS-2BE');
             },
             $str
@@ -33,5 +31,4 @@ class DecodeUtf8 implements FilterInterface
 
         return $str;
     }
-
 }

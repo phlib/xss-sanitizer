@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer;
 
 /**
@@ -7,23 +9,13 @@ namespace Phlib\XssSanitizer;
  */
 class AttributeFinder
 {
-    /**
-     * @var array
-     */
-    protected $attributes;
+    private array $attributes;
+
+    private string $optimisticSearchRegex;
+
+    private string $pessimisticSearchRegex;
 
     /**
-     * @var string
-     */
-    protected $optimisticSearchRegex;
-
-    /**
-     * @var string
-     */
-    protected $pessimisticSearchRegex;
-
-    /**
-     * AttributeFinder constructor
      * @param string|string[] $attributes
      */
     public function __construct($attributes)
@@ -31,8 +23,8 @@ class AttributeFinder
         if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
-        $this->attributes             = $attributes;
-        $this->optimisticSearchRegex  = $this->initOptimisticSearchRegex();
+        $this->attributes = $attributes;
+        $this->optimisticSearchRegex = $this->initOptimisticSearchRegex();
         $this->pessimisticSearchRegex = $this->initPessimisticSearchRegex($attributes);
     }
 
@@ -49,12 +41,8 @@ class AttributeFinder
      *     $fullAttribute:    'href="something"'
      *     $attributeContent: 'something'
      * and the return from the callback would replace the $fullAttribute in the original string
-     *
-     * @param string $attributes
-     * @param callable $callback
-     * @return string
      */
-    public function findAttributes($attributes, callable $callback)
+    public function findAttributes(string $attributes, callable $callback): string
     {
         $filtered = [];
 
@@ -73,16 +61,12 @@ class AttributeFinder
      *
      * This allows us to ignore cases where an attribute name appears in the context of an attribute value
      * when we know that the attribute is well formed
-     *
-     * @param string $attributes
-     * @param callable $callback
-     * @param array $filtered
      */
-    protected function findAttributesOptimistic(&$attributes, callable $callback, array &$filtered)
+    private function findAttributesOptimistic(string &$attributes, callable $callback, array &$filtered): void
     {
         while (preg_match($this->optimisticSearchRegex, $attributes, $matches)) {
             $attributes = substr($attributes, strlen($matches[0]));
-            if (in_array(strtolower($matches[3]), $this->attributes)) {
+            if (in_array(strtolower($matches[3]), $this->attributes, true)) {
                 $replacement = $callback($matches[2], $matches[5]);
             } else {
                 $replacement = $matches[2];
@@ -92,23 +76,18 @@ class AttributeFinder
         }
     }
 
-    /**
-     * Build the optimistic search regex
-     *
-     * @return string
-     */
-    protected function initOptimisticSearchRegex()
+    private function initOptimisticSearchRegex(): string
     {
         return implode('', [
             '#',
-                '^(\s*)',        // group 1 (whitespace)
-                '(',             // group 2 (full attribute)
-                    '([a-z]+)',  // group 3 (attribute name)
-                    '=',
-                    '(["\'])',   // group 4 (quote)
-                    '(.*?)',     // group 5 (attribute value)
-                    '\4',
-                ')',
+            '^(\s*)',        // group 1 (whitespace)
+            '(',             // group 2 (full attribute)
+                '([a-z]+)',  // group 3 (attribute name)
+                '=',
+                '(["\'])',   // group 4 (quote)
+                '(.*?)',     // group 5 (attribute value)
+                '\4',
+            ')',
             '#si',
         ]);
     }
@@ -120,16 +99,12 @@ class AttributeFinder
      *
      * Here, we aren't too bothered about false positives; we want to make sure we catch all and any possibilities
      * of the attribute appearing, which may include occurances within an attribute value
-     *
-     * @param string $attributes
-     * @param callable $callback
-     * @param array $filtered
      */
-    protected function findAttributesPessimistic($attributes, callable $callback, array &$filtered)
+    private function findAttributesPessimistic(string $attributes, callable $callback, array &$filtered): void
     {
         $filtered[] = preg_replace_callback(
             $this->pessimisticSearchRegex,
-            function($matches) use ($callback) {
+            function ($matches) use ($callback) {
                 if (isset($matches[2]) && $matches[2]) {
                     $attributeContents = $matches[2]; // quoted contents
                 } else {
@@ -141,13 +116,7 @@ class AttributeFinder
         );
     }
 
-    /**
-     * Build the search regex based on the attributes specified
-     *
-     * @param array $attributes
-     * @return string
-     */
-    protected function initPessimisticSearchRegex($attributes)
+    private function initPessimisticSearchRegex(array $attributes): string
     {
         $attributes = '(?:' . implode('|', $attributes) . ')';
         return implode('', [
@@ -167,5 +136,4 @@ class AttributeFinder
             '#si',
         ]);
     }
-
 }

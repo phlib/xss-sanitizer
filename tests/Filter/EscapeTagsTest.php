@@ -1,33 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\EscapeTags;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class EscapeTagsTest extends \PHPUnit_Framework_TestCase
+class EscapeTagsTest extends TestCase
 {
-
     /**
      * @dataProvider escapeTagsDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testEscapeTags($original, $expected)
+    public function testEscapeTags(string $original, string $expected): void
     {
-
         $actual = (new EscapeTags('script'))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function escapeTagsDataProvider()
+    public function escapeTagsDataProvider(): array
     {
         return [
             ['<body><script>alert(\'XSS\');</script></body>', '<body>&lt;script>alert(\'XSS\');&lt;/script></body>'],
             ['<body><scri<script>pt>alert(\'XSS\');<scri</script>pt></body>', '<body><scri&lt;script>pt>alert(\'XSS\');<scri&lt;/script>pt></body>'],
         ];
     }
-
 }

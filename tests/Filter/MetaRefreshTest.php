@@ -1,45 +1,46 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\MetaRefresh;
 use Phlib\XssSanitizer\FilterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class MetaRefreshTest extends \PHPUnit_Framework_TestCase
+class MetaRefreshTest extends TestCase
 {
     /**
-     * @var FilterInterface
+     * @var FilterInterface|MockObject
      */
-    protected $cleaner;
+    private MockObject $cleaner;
 
-    public function setUp()
+    protected function setUp(): void
     {
-        $cleaner = $this->getMock(FilterInterface::class);
-        $cleaner->expects($this->any())
-            ->method('filter')
-            ->will($this->returnCallback(function($str) {
+        $cleaner = $this->createMock(FilterInterface::class);
+        $cleaner->method('filter')
+            ->willReturnCallback(function ($str): string {
                 $str = str_ireplace('re fresh', 'refresh', $str);
                 $str = str_ireplace('re&#115;fresh', 'refresh', $str);
                 return $str;
-            }));
+            });
         $this->cleaner = $cleaner;
     }
 
     /**
      * @dataProvider removeMetaDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testRemoveMeta($original, $expected)
+    public function testRemoveMeta(string $original, string $expected): void
     {
         $actual = (new MetaRefresh($this->cleaner))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function removeMetaDataProvider()
+    public function removeMetaDataProvider(): array
     {
         return [
             // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META
@@ -65,5 +66,4 @@ class MetaRefreshTest extends \PHPUnit_Framework_TestCase
             ['<meta http-equiv="x-ua-compatible" content="ie=edge">', '<meta http-equiv="x-ua-compatible" content="ie=edge">'],
         ];
     }
-
 }

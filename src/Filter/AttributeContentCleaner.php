@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
-use Phlib\XssSanitizer\Filter\AttributeContent;
 use Phlib\XssSanitizer\FilterInterface;
 use Phlib\XssSanitizer\FilterRunnerTrait;
 
@@ -16,11 +17,8 @@ class AttributeContentCleaner implements FilterInterface
     /**
      * @var FilterInterface[]
      */
-    protected $filters;
+    private array $filters;
 
-    /**
-     * AttributeContentCleaner constructor
-     */
     public function __construct()
     {
         $this->initFilters();
@@ -34,19 +32,13 @@ class AttributeContentCleaner implements FilterInterface
      *     \u006A a v a &#115; c r i p t:alert('XSS');
      * should become
      *     javascript:alert('XSS');
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         return $this->runFilters($str, $this->filters);
     }
 
-    /**
-     * Create the filters and add to the filters array
-     */
-    protected function initFilters()
+    private function initFilters(): void
     {
         $this->filters = [
             new AttributeContent\DecodeUtf8(),
@@ -54,5 +46,4 @@ class AttributeContentCleaner implements FilterInterface
             new AttributeContent\CompactExplodedWords(),
         ];
     }
-
 }

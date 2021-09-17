@@ -1,27 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeEntities;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class DecodeEntitiesTest extends \PHPUnit_Framework_TestCase
+class DecodeEntitiesTest extends TestCase
 {
-
     /**
      * @dataProvider decodeDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testDecode($original, $expected)
+    public function testDecode(string $original, string $expected): void
     {
         $actual = (new DecodeEntities())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function decodeDataProvider()
+    public function decodeDataProvider(): array
     {
         return [
             ['xx &#65; xx', 'xx A xx'],
@@ -39,5 +39,4 @@ class DecodeEntitiesTest extends \PHPUnit_Framework_TestCase
             ['xx &#x0000000000000006a xx', 'xx j xx'],
         ];
     }
-
 }

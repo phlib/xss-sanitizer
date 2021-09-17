@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -15,10 +17,9 @@ class FilterRunner implements FilterInterface
     /**
      * @var FilterInterface[]
      */
-    protected $filters;
+    private array $filters;
 
     /**
-     * FilterRunner constructor
      * @param FilterInterface|FilterInterface[] $filters
      */
     public function __construct($filters)
@@ -31,13 +32,9 @@ class FilterRunner implements FilterInterface
 
     /**
      * Runs each of the filters against the string repeatedly
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         return $this->runFilters($str, $this->filters);
     }
-
 }

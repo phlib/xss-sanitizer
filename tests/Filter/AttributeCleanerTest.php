@@ -1,46 +1,46 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\AttributeCleaner;
 use Phlib\XssSanitizer\FilterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib/XssSanitiser
  */
-class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
+class AttributeCleanerTest extends TestCase
 {
     /**
-     * @var FilterInterface
+     * @var FilterInterface|MockObject
      */
-    protected $cleaner;
+    private MockObject $cleaner;
 
-    public function setUp()
+    protected function setUp(): void
     {
-        $cleaner = $this->getMock(FilterInterface::class);
-        $cleaner->expects($this->any())
-            ->method('filter')
-            ->will($this->returnCallback(function($str) {
+        $cleaner = $this->createMock(FilterInterface::class);
+        $cleaner->method('filter')
+            ->willReturnCallback(function ($str): string {
                 $str = str_ireplace('java script', 'javascript', $str);
                 $str = str_ireplace('java&#115;cript', 'javascript', $str);
                 return $str;
-            }));
+            });
         $this->cleaner = $cleaner;
     }
 
     /**
      * @dataProvider cleanLinkHrefDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testCleanLinkHref($original, $expected)
+    public function testCleanLinkHref(string $original, string $expected): void
     {
-
-        $actual = (new AttributeCleaner('href', $this->cleaner, ['a','link']))->filter($original);
-        $this->assertEquals($expected, $actual);
+        $actual = (new AttributeCleaner('href', $this->cleaner, ['a', 'link']))->filter($original);
+        static::assertSame($expected, $actual);
     }
 
-    public function cleanLinkHrefDataProvider()
+    public function cleanLinkHrefDataProvider(): array
     {
         return [
             ['<a href="javascript:alert(\'XSS\')">', '<a >'],
@@ -74,16 +74,14 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider cleanImgSrcDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testCleanImgSrc($original, $expected)
+    public function testCleanImgSrc(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('src', $this->cleaner, 'img'))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function cleanImgSrcDataProvider()
+    public function cleanImgSrcDataProvider(): array
     {
         return [
             ['<img src="javascript:alert(\'XSS\')">', '<img >'],
@@ -98,16 +96,14 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider cleanBackgroundAnyTagDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testCleanBackgroundAnyTag($original, $expected)
+    public function testCleanBackgroundAnyTag(string $original, string $expected): void
     {
         $actual = (new AttributeCleaner('background', $this->cleaner))->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function cleanBackgroundAnyTagDataProvider()
+    public function cleanBackgroundAnyTagDataProvider(): array
     {
         return [
             ['<div background="javascript:alert(\'XSS\')">', '<div >'],
@@ -115,5 +111,4 @@ class AttributeCleanerTest extends \PHPUnit_Framework_TestCase
             ['<span background="javascript:alert(\'XSS\')">', '<span >'],
         ];
     }
-
 }

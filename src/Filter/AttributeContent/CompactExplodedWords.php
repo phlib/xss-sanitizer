@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -9,15 +11,8 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class CompactExplodedWords implements FilterInterface
 {
+    private string $wordsRegex;
 
-    /**
-     * @var string
-     */
-    protected $wordsRegex;
-
-    /**
-     * CompactExplodedWords constructor
-     */
     public function __construct()
     {
         $this->wordsRegex = $this->buildWordsRegex();
@@ -30,15 +25,12 @@ class CompactExplodedWords implements FilterInterface
      *     j a v a s c r i p t
      * becomes
      *     javascript
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         $str = preg_replace_callback(
             $this->wordsRegex,
-            function ($matches) {
+            function ($matches): string {
                 return preg_replace('/\s+/', '', $matches[1]) . $matches[2];
             },
             $str
@@ -47,12 +39,7 @@ class CompactExplodedWords implements FilterInterface
         return $str;
     }
 
-    /**
-     * Build the regex for finding the exploded words
-     *
-     * @return string
-     */
-    protected function buildWordsRegex()
+    private function buildWordsRegex(): string
     {
         $rawWords = [
             'javascript',
@@ -68,5 +55,4 @@ class CompactExplodedWords implements FilterInterface
             '#(', implode('|', $words), ')(\W|$)#is',
         ]);
     }
-
 }

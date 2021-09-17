@@ -1,27 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test;
 
 use Phlib\XssSanitizer\Sanitizer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class SanitizerTest extends \PHPUnit_Framework_TestCase
+class SanitizerTest extends TestCase
 {
-
     /**
      * @dataProvider sanitizeDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testSanitize($original, $expected)
+    public function testSanitize(string $original, string $expected): void
     {
         $actual = (new Sanitizer())->sanitize($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function sanitizeDataProvider()
+    public function sanitizeDataProvider(): array
     {
         return [
             ['<body><script>alert(\'XSS\');</script></body>', '<body></body>'],
@@ -61,7 +61,7 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testSanitizeArray()
+    public function testSanitizeArray(): void
     {
         $strings = [
             '<body><script>alert(\'XSS\');</script></body>',
@@ -74,8 +74,7 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $actual = (new Sanitizer())->sanitizeArray($strings);
-        
-        $this->assertEquals($expected, $actual);
-    }
 
+        static::assertSame($expected, $actual);
+    }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Phlib\XssSanitizer;
+declare(strict_types=1);
 
-use Phlib\XssSanitizer\Filter;
+namespace Phlib\XssSanitizer;
 
 /**
  * @package Phlib\XssSanitizer
@@ -14,23 +14,14 @@ class Sanitizer
     /**
      * @var FilterInterface[]
      */
-    protected $filters;
+    private array $filters;
 
-    /**
-     * Sanitizer constructor
-     */
     public function __construct()
     {
         $this->initFilters();
     }
 
-    /**
-     * Sanitize a HTML string
-     *
-     * @param string $str
-     * @return string
-     */
-    public function sanitize($str)
+    public function sanitize(string $str): string
     {
         $str = $this->runFilters($str, $this->filters);
 
@@ -43,7 +34,7 @@ class Sanitizer
      * @param string[] $strings
      * @return string[]
      */
-    public function sanitizeArray(array $strings)
+    public function sanitizeArray(array $strings): array
     {
         foreach ($strings as &$str) {
             $str = $this->sanitize($str);
@@ -52,16 +43,13 @@ class Sanitizer
         return $strings;
     }
 
-    /**
-     * Create the filters and add to the filters array
-     */
-    protected function initFilters()
+    private function initFilters(): void
     {
         $this->filters = [];
 
         $attributeContentCleaner = new Filter\AttributeContentCleaner();
-        $this->filters[] = new Filter\AttributeCleaner('href', $attributeContentCleaner, ['a','link']);
-        $this->filters[] = new Filter\AttributeCleaner('src', $attributeContentCleaner, ['img','input', 'bgsound']);
+        $this->filters[] = new Filter\AttributeCleaner('href', $attributeContentCleaner, ['a', 'link']);
+        $this->filters[] = new Filter\AttributeCleaner('src', $attributeContentCleaner, ['img', 'input', 'bgsound']);
         $this->filters[] = new Filter\AttributeCleaner('action', $attributeContentCleaner, ['form']);
         $this->filters[] = new Filter\AttributeCleaner('background', $attributeContentCleaner);
         $this->filters[] = new Filter\FilterRunner(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\FilterInterface;
@@ -9,15 +11,8 @@ use Phlib\XssSanitizer\FilterInterface;
  */
 class DecodeEntities implements FilterInterface
 {
+    private string $entityRegex;
 
-    /**
-     * @var string
-     */
-    protected $entityRegex;
-
-    /**
-     * DecodeEntities constructor
-     */
     public function __construct()
     {
         $this->entityRegex = $this->buildEntityRegex();
@@ -30,49 +25,40 @@ class DecodeEntities implements FilterInterface
      *     java&#115;cript:alert('XSS');
      * becomes
      *     javascript:alert('XSS');
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
         $str = preg_replace_callback(
             $this->entityRegex,
-            function ($matches) {
+            function ($matches): string {
                 if ($matches[1]) {
                     $entity = "&#{$matches[1]};";
                 } else {
                     $entity = "&#x{$matches[2]};";
                 }
-                return mb_convert_encoding($entity, "UTF-8", "HTML-ENTITIES");
+                return mb_convert_encoding($entity, 'UTF-8', 'HTML-ENTITIES');
             },
             $str
         );
         return $str;
     }
 
-    /**
-     * Build the regex for finding entities in the attribute content
-     *
-     * @return string
-     */
-    protected function buildEntityRegex()
+    private function buildEntityRegex(): string
     {
         return implode('', [
             '/',
-                '&#',
-                '(?:',
-                    // decimal
-                    '(?:0*)', // ignore zero padding
-                    '([0-9]+)',
-                '|',
-                    // hexadecimal
-                    'x(?:0*)', // ignore zero padding
-                    '([0-9a-f]+)',
-                ')',
-                '(;)?',
+            '&#',
+            '(?:',
+                // decimal
+                '(?:0*)', // ignore zero padding
+                '([0-9]+)',
+            '|',
+                // hexadecimal
+                'x(?:0*)', // ignore zero padding
+                '([0-9a-f]+)',
+            ')',
+            '(;)?',
             '/i',
         ]);
     }
-
 }

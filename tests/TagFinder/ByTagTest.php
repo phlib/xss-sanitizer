@@ -1,22 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\TagFinder;
 
 use Phlib\XssSanitizer\TagFinder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class ByTagTest extends \PHPUnit_Framework_TestCase
+class ByTagTest extends TestCase
 {
-    public function testFindTagsCallbackArgs()
+    public function testFindTagsCallbackArgs(): void
     {
         $tagFinder = new TagFinder\ByTag('title');
 
         $str = '<html><body><a title="something"></body></html>';
-        $expectedFullTag    = '<a title="something">';
+        $expectedFullTag = '<a title="something">';
         $expectedAttributes = ' title="something"';
-        $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes) {
+        $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes): string {
             static::assertSame($expectedFullTag, $fullTag);
             static::assertSame($expectedAttributes, $attributes);
             return '';
@@ -24,7 +27,7 @@ class ByTagTest extends \PHPUnit_Framework_TestCase
         $tagFinder->findTags($str, $callback);
     }
 
-    public function testFindTagsMultipleTags()
+    public function testFindTagsMultipleTags(): void
     {
         $tagFinder = new TagFinder\ByTag(['a', 'link']);
 
@@ -34,7 +37,7 @@ class ByTagTest extends \PHPUnit_Framework_TestCase
             '<link rel="alternate">',
         ];
         $actualFullTags = [];
-        $callback = function ($fullTag) use (&$actualFullTags) {
+        $callback = function ($fullTag) use (&$actualFullTags): string {
             $actualFullTags[] = $fullTag;
             return '';
         };
@@ -46,15 +49,12 @@ class ByTagTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider findTagsReplacementDataProvider
-     * @param string $str
-     * @param string $replacement
-     * @param string $expected
      */
-    public function testFindTagsReplacement($str, $replacement, $expected)
+    public function testFindTagsReplacement(string $str, string $replacement, string $expected): void
     {
         $tagFinder = new TagFinder\ByTag('a');
 
-        $replacer = function () use ($replacement) {
+        $replacer = function () use ($replacement): string {
             return $replacement;
         };
         $actual = $tagFinder->findTags($str, $replacer);
@@ -62,7 +62,7 @@ class ByTagTest extends \PHPUnit_Framework_TestCase
         static::assertSame($expected, $actual);
     }
 
-    public function findTagsReplacementDataProvider()
+    public function findTagsReplacementDataProvider(): array
     {
         $r = '<!--replacement!-->';
         return [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Filter;
 
 use Phlib\XssSanitizer\AttributeFinder;
@@ -11,28 +13,15 @@ use Phlib\XssSanitizer\TagFinder;
  */
 class MetaRefresh implements FilterInterface
 {
-    /**
-     * @var TagFinder\ByTag
-     */
-    protected $tagFinder;
+    private TagFinder\ByTag $tagFinder;
 
-    /**
-     * @var AttributeFinder
-     */
-    protected $attrFinder;
+    private AttributeFinder $attrFinder;
 
-    /**
-     * @var FilterInterface
-     */
-    protected $attributeContentCleaner;
+    private FilterInterface $attributeContentCleaner;
 
-    /**
-     * MetaRefresh constructor
-     * @param FilterInterface $attributeContentCleaner
-     */
     public function __construct(FilterInterface $attributeContentCleaner)
     {
-        $this->tagFinder  = new TagFinder\ByTag('meta');
+        $this->tagFinder = new TagFinder\ByTag('meta');
         $this->attrFinder = new AttributeFinder('http-equiv');
 
         $this->attributeContentCleaner = $attributeContentCleaner;
@@ -45,13 +34,10 @@ class MetaRefresh implements FilterInterface
      * e.g.
      *     <meta http-equiv="refresh" content="0;url=javascript:alert('XSS');">
      * would be removed
-     *
-     * @param string $str
-     * @return string
      */
-    public function filter($str)
+    public function filter(string $str): string
     {
-        $str = $this->tagFinder->findTags($str, function($fullTag, $attributes) {
+        $str = $this->tagFinder->findTags($str, function ($fullTag, $attributes): string {
             return $this->cleanTag($fullTag, $attributes);
         });
         return $str;
@@ -62,13 +48,12 @@ class MetaRefresh implements FilterInterface
      *
      * @param string $fullTag (e.g. '<meta http-equiv="refresh">')
      * @param string $attributes (e.g. 'meta http-equiv="refresh"')
-     * @return string
      */
-    protected function cleanTag($fullTag, $attributes)
+    private function cleanTag(string $fullTag, string $attributes): string
     {
         $isRefreshTag = false;
 
-        $this->attrFinder->findAttributes($attributes, function($full, $contents) use (&$isRefreshTag) {
+        $this->attrFinder->findAttributes($attributes, function ($full, $contents) use (&$isRefreshTag) {
             $cleanedContents = $this->attributeContentCleaner->filter($contents);
             if (preg_match('/refresh/i', $cleanedContents)) {
                 $isRefreshTag = true;

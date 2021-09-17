@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\TagFinder;
 
 use Phlib\XssSanitizer\TagFinderInterface;
@@ -9,13 +11,9 @@ use Phlib\XssSanitizer\TagFinderInterface;
  */
 class ByTag implements TagFinderInterface
 {
-    /**
-     * @var string
-     */
-    protected $searchRegex;
+    private string $searchRegex;
 
     /**
-     * ByTag constructor
      * @param string|string[] $tags
      */
     public function __construct($tags)
@@ -36,16 +34,12 @@ class ByTag implements TagFinderInterface
      *     $fullTag:    '<img src="something">'
      *     $attributes: ' src="something"'
      * and the return from the callback would replace the $fullTag in the original string
-     *
-     * @param string $str
-     * @param callable $callback
-     * @return string
      */
-    public function findTags($str, callable $callback)
+    public function findTags(string $str, callable $callback): string
     {
         return preg_replace_callback(
             $this->searchRegex,
-            function($matches) use ($callback) {
+            function ($matches) use ($callback) {
                 return $callback($matches[0], $matches[1]);
             },
             $str
@@ -53,12 +47,9 @@ class ByTag implements TagFinderInterface
     }
 
     /**
-     * Build the search regex based on the tags specified
-     *
      * @param string|string[] $tags
-     * @return string
      */
-    protected function initSearchRegex($tags)
+    private function initSearchRegex($tags): string
     {
         if (is_array($tags)) {
             $tags = '(?:' . implode('|', $tags) . ')';
@@ -67,7 +58,7 @@ class ByTag implements TagFinderInterface
             '#<',
             $tags,
             '[^a-z0-9>]+([^>]*)(?:>|$)',
-            '#si'
+            '#si',
         ]);
     }
 }

@@ -1,29 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\TagFinder;
 
 use Phlib\XssSanitizer\TagFinder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class ByAttributeTest extends \PHPUnit_Framework_TestCase
+class ByAttributeTest extends TestCase
 {
-    public function testFindTagsCallbackArgs()
+    public function testFindTagsCallbackArgs(): void
     {
         $tagFinder = new TagFinder\ByAttribute('title');
 
         $str = '<html><body><a title="something"></body></html>';
-        $expectedFullTag    = '<a title="something">';
+        $expectedFullTag = '<a title="something">';
         $expectedAttributes = ' title="something"';
-        $callback = function($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes) {
-            $this->assertEquals($expectedFullTag, $fullTag);
-            $this->assertEquals($expectedAttributes, $attributes);
+        $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes): string {
+            static::assertSame($expectedFullTag, $fullTag);
+            static::assertSame($expectedAttributes, $attributes);
+            return '';
         };
         $tagFinder->findTags($str, $callback);
     }
 
-    public function testFindTagsMultipleAttributes()
+    public function testFindTagsMultipleAttributes(): void
     {
         $tagFinder = new TagFinder\ByAttribute(['title', 'name']);
 
@@ -33,40 +37,37 @@ class ByAttributeTest extends \PHPUnit_Framework_TestCase
             '<a name="thename">',
         ];
         $actualFullTags = [];
-        $callback = function($fullTag) use (&$actualFullTags) {
+        $callback = function ($fullTag) use (&$actualFullTags): string {
             $actualFullTags[] = $fullTag;
+            return '';
         };
         $tagFinder->findTags($str, $callback);
 
-        $this->assertEquals(2, count($actualFullTags));
-        $this->assertEquals($expectedFullTags, $actualFullTags);
+        static::assertCount(2, $actualFullTags);
+        static::assertSame($expectedFullTags, $actualFullTags);
     }
 
     /**
      * @dataProvider findTagsReplacementDataProvider
-     * @param string $str
-     * @param string $replacement
-     * @param string $expected
      */
-    public function testFindTagsReplacement($str, $replacement, $expected)
+    public function testFindTagsReplacement(string $str, string $replacement, string $expected): void
     {
         $tagFinder = new TagFinder\ByAttribute('title');
 
-        $replacer = function() use ($replacement) {
+        $replacer = function () use ($replacement): string {
             return $replacement;
         };
-        $actual   = $tagFinder->findTags($str, $replacer);
+        $actual = $tagFinder->findTags($str, $replacer);
 
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function findTagsReplacementDataProvider()
+    public function findTagsReplacementDataProvider(): array
     {
         $r = '<!--replacement!-->';
         return [
-            ['<html><body><a title="something"></body></html>', $r, "<html><body>$r</body></html>"],
-            ['<html><body><a title="something"><a title="something"></body></html>', $r, "<html><body>$r$r</body></html>"],
+            ['<html><body><a title="something"></body></html>', $r, "<html><body>{$r}</body></html>"],
+            ['<html><body><a title="something"><a title="something"></body></html>', $r, "<html><body>{$r}{$r}</body></html>"],
         ];
     }
-
 }

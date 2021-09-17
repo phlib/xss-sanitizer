@@ -1,27 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter\AttributeContent;
 
 use Phlib\XssSanitizer\Filter\AttributeContent\DecodeUtf8;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class DecodeUtf8Test extends \PHPUnit_Framework_TestCase
+class DecodeUtf8Test extends TestCase
 {
-
     /**
      * @dataProvider decodeDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testDecode($original, $expected)
+    public function testDecode(string $original, string $expected): void
     {
         $actual = (new DecodeUtf8())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function decodeDataProvider()
+    public function decodeDataProvider(): array
     {
         return [
             ['xx \u006a xx', 'xx j xx'],
@@ -31,5 +31,4 @@ class DecodeUtf8Test extends \PHPUnit_Framework_TestCase
             ['xx \u003A xx', 'xx : xx'],
         ];
     }
-
 }

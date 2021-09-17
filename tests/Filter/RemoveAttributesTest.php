@@ -1,28 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phlib\XssSanitizer\Test\Filter;
 
 use Phlib\XssSanitizer\Filter\RemoveAttributes;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package Phlib\XssSanitizer
  */
-class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
+class RemoveAttributesTest extends TestCase
 {
-
     /**
      * @dataProvider removeAttributesDataProvider
-     * @param string $original
-     * @param string $expected
      */
-    public function testRemoveAttributes($original, $expected)
+    public function testRemoveAttributes(string $original, string $expected): void
     {
-
         $actual = (new RemoveAttributes())->filter($original);
-        $this->assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
-    public function removeAttributesDataProvider()
+    public function removeAttributesDataProvider(): array
     {
         return [
             ['<body onload="alert(document.cookie);">', '<body >'],
@@ -52,5 +51,4 @@ class RemoveAttributesTest extends \PHPUnit_Framework_TestCase
             ['<a href="http://my.website/index.php?onload=dostuff">', '<a href="http://my.website/index.php?onload=dostuff">'],
         ];
     }
-
 }
