@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Add specific support for PHP v8.
 - Type declarations have been added to all method parameters and return types
   where possible.
 - Add explicit dependency for `mbstring` PHP extension. This has always been
