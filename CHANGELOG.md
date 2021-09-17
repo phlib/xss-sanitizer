@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.0.0] - 2021-08-17
 ### Added
 - Add specific support for PHP v8.
 - Type declarations have been added to all properties, method parameters and
