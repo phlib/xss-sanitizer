@@ -14,11 +14,11 @@ class ByTagTest extends TestCase
 {
     public function testFindTagsCallbackArgs(): void
     {
-        $tagFinder = new TagFinder\ByTag('title');
+        $tagFinder = new TagFinder\ByTag('a');
 
         $str = '<html><body><a title="something"></body></html>';
         $expectedFullTag = '<a title="something">';
-        $expectedAttributes = ' title="something"';
+        $expectedAttributes = 'title="something"';
         $callback = function ($fullTag, $attributes) use ($expectedFullTag, $expectedAttributes): string {
             static::assertSame($expectedFullTag, $fullTag);
             static::assertSame($expectedAttributes, $attributes);
