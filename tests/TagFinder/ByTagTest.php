@@ -69,12 +69,12 @@ class ByTagTest extends TestCase
             'single' => [
                 '<html><body><a title="something"></body></html>',
                 $r,
-                "<html><body>$r</body></html>"
+                "<html><body>{$r}</body></html>",
             ],
             'multi' => [
                 '<html><body><a title="something"><a title="something"></body></html>',
                 $r,
-                "<html><body>$r$r</body></html>"
+                "<html><body>{$r}{$r}</body></html>",
             ],
         ];
     }
