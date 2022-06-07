@@ -106,9 +106,55 @@ class AttributeCleanerTest extends TestCase
     public function cleanBackgroundAnyTagDataProvider(): array
     {
         return [
-            ['<div background="javascript:alert(\'XSS\')">', '<div >'],
-            ['<body background="javascript:alert(\'XSS\')">', '<body >'],
-            ['<span background="javascript:alert(\'XSS\')">', '<span >'],
+            'remove-attr-div-dblquote' => [
+                '<div background="javascript:alert(\'XSS\')">',
+                '<div >',
+            ],
+            'remove-attr-div-snglquote' => [
+                '<div background=\'javascript:alert("XSS")\'>',
+                '<div >',
+            ],
+            'remove-attr-div-noquote' => [
+                '<div background=javascript:alert(\'XSS\')>',
+                '<div >',
+            ],
+            'remove-attr-body-dblquote' => [
+                '<body background="javascript:alert(\'XSS\')">',
+                '<body >',
+            ],
+            'remove-attr-body-snglquote' => [
+                '<body background=\'javascript:alert("XSS")\'>',
+                '<body >',
+            ],
+            'remove-attr-body-noquote' => [
+                '<body background=javascript:alert(\'XSS\')>',
+                '<body >',
+            ],
+            'remove-attr-span-dblquote' => [
+                '<span background="javascript:alert(\'XSS\')">',
+                '<span >',
+            ],
+            'remove-attr-span-snglquote' => [
+                '<span background=\'javascript:alert("XSS")\'>',
+                '<span >',
+            ],
+            'remove-attr-span-noquote' => [
+                '<span background=javascript:alert(\'XSS\')>',
+                '<span >',
+            ],
+
+            'valid-pessimistic-empty-dblquote' => [
+                '<div style="color:red;" background="">',
+                '<div style="color:red;" background="">',
+            ],
+            'valid-pessimistic-empty-snglquote' => [
+                '<div style="color:red;" background=\'\'>',
+                '<div style="color:red;" background=\'\'>',
+            ],
+            'valid-pessimistic-empty-noquote' => [
+                '<div style="color:red;" background= >',
+                '<div style="color:red;" background= >',
+            ],
         ];
     }
 }
