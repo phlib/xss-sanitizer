@@ -105,9 +105,10 @@ class AttributeFinder
         $filtered[] = preg_replace_callback(
             $this->pessimisticSearchRegex,
             function ($matches) use ($callback) {
+                $attributeContents = '';
                 if (isset($matches[2]) && $matches[2]) {
                     $attributeContents = $matches[2]; // quoted contents
-                } else {
+                } elseif (isset($matches[3]) && $matches[3]) {
                     $attributeContents = $matches[3]; // unquoted contents
                 }
                 return $callback($matches[0], $attributeContents);
