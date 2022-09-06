@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.1.1] - 2022-09-06
 ### Fixed
 - Attribute cleaner error when filtered tag has empty content.
 
