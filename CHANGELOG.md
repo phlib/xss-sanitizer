@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Attribute cleaner error when filtered tag has empty content.
 
-## [1.0.1] - 2016-11-01
+## [1.1.0] - 2016-11-01
 - Adds a method for sanitizing an array of strings.
 
 ## [1.0.0] - 2016-03-18
