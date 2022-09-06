@@ -27,7 +27,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BC break**: Removed support for PHP versions <= v7.3 as they are no longer
   [actively supported](https://php.net/supported-versions.php) by the PHP project.
 
-## [1.0.1] - 2016-11-01
+## [1.1.1] - 2022-09-06
+### Fixed
+- Attribute cleaner error when filtered tag has empty content.
+
+## [1.1.0] - 2016-11-01
 - Adds a method for sanitizing an array of strings.
 
 ## [1.0.0] - 2016-03-18
