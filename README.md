@@ -1,6 +1,6 @@
 # phlib/xss-sanitizer
 
-[![Code Checks](https://img.shields.io/github/workflow/status/phlib/xss-sanitizer/CodeChecks?logo=github)](https://github.com/phlib/xss-sanitizer/actions/workflows/code-checks.yml)
+[![Code Checks](https://img.shields.io/github/actions/workflow/status/phlib/xss-sanitizer/code-checks.yml?logo=github)](https://github.com/phlib/xss-sanitizer/actions/workflows/code-checks.yml)
 [![Codecov](https://img.shields.io/codecov/c/github/phlib/xss-sanitizer.svg?logo=codecov)](https://codecov.io/gh/phlib/xss-sanitizer)
 [![Latest Stable Version](https://img.shields.io/packagist/v/phlib/xss-sanitizer.svg?logo=packagist)](https://packagist.org/packages/phlib/xss-sanitizer)
 [![Total Downloads](https://img.shields.io/packagist/dt/phlib/xss-sanitizer.svg?logo=packagist)](https://packagist.org/packages/phlib/xss-sanitizer)
