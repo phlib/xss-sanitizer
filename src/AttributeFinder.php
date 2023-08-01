@@ -82,11 +82,11 @@ class AttributeFinder
             '#',
             '^(\s*)',        // group 1 (whitespace)
             '(',             // group 2 (full attribute)
-                '([a-z]+)',  // group 3 (attribute name)
-                '=',
-                '(["\'])',   // group 4 (quote)
-                '(.*?)',     // group 5 (attribute value)
-                '\4',
+            '([a-z]+)',  // group 3 (attribute name)
+            '=',
+            '(["\'])',   // group 4 (quote)
+            '(.*?)',     // group 5 (attribute value)
+            '\4',
             ')',
             '#si',
         ]);
@@ -127,12 +127,12 @@ class AttributeFinder
             '[^0-9a-z"\'=]*', // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
             '=',
             '(?:',
-                '(["\'`])', // quoted
-                '(.*?)',
-                '\1', // quote character
+            '(["\'`])', // quoted
+            '(.*?)',
+            '\1', // quote character
             '|',
-                '(?<!["\'`])', // unqouted
-                '((?:[^ >])*)', // everything up to space or '>'
+            '(?<!["\'`])', // unqouted
+            '((?:[^ >])*)', // everything up to space or '>'
             ')',
             '#si',
         ]);

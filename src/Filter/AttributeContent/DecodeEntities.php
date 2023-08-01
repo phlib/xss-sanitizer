@@ -49,13 +49,13 @@ class DecodeEntities implements FilterInterface
             '/',
             '&#',
             '(?:',
-                // decimal
-                '(?:0*)', // ignore zero padding
-                '([0-9]+)',
+            // decimal
+            '(?:0*)', // ignore zero padding
+            '([0-9]+)',
             '|',
-                // hexadecimal
-                'x(?:0*)', // ignore zero padding
-                '([0-9a-f]+)',
+            // hexadecimal
+            'x(?:0*)', // ignore zero padding
+            '([0-9a-f]+)',
             ')',
             '(;)?',
             '/i',
