@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.0.2] - 2023-08-01
 ### Removed
 - Remove test dependency asset files, and remove test files from dist package.
 
