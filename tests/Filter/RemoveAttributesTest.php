@@ -47,8 +47,14 @@ class RemoveAttributesTest extends TestCase
             ['<a invalid="something""href="onload=alert(\'XSS\');" >', '<a invalid="something""href=" >'],
 
             // valid values
-            ['<a href="http://my.website/index.php?onetimekey=abc">', '<a href="http://my.website/index.php?onetimekey=abc">'],
-            ['<a href="http://my.website/index.php?onload=dostuff">', '<a href="http://my.website/index.php?onload=dostuff">'],
+            [
+                '<a href="http://my.website/index.php?onetimekey=abc">',
+                '<a href="http://my.website/index.php?onetimekey=abc">',
+            ],
+            [
+                '<a href="http://my.website/index.php?onload=dostuff">',
+                '<a href="http://my.website/index.php?onload=dostuff">',
+            ],
         ];
     }
 }

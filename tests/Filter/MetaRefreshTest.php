@@ -43,27 +43,57 @@ class MetaRefreshTest extends TestCase
     public function removeMetaDataProvider(): array
     {
         return [
-            // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META
-            ['<META HTTP-EQUIV="refresh" CONTENT="0;url=javascript:alert(\'XSS\');">', ''],
-            // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META_using_data
-            ['<META HTTP-EQUIV="refresh" CONTENT="0;url=data:text/html base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K">', ''],
-            // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META_with_additional_URL_parameter
-            ['<META HTTP-EQUIV="refresh" CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
-
-            // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
-            ['<META HTTP-EQUIV!#$%&()*~+-_.,:;?@[/|\]^`="refresh" CONTENT="0;url=javascript:alert(\'XSS\');">', ''],
-
-            ['<META HTTP-EQUIV=refresh CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
-            ['<META HTTP-EQUIV=`refresh` CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
-            ['<META HTTP-EQUIV=\'refresh\' CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
-
+            [
+                // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META
+                '<META HTTP-EQUIV="refresh" CONTENT="0;url=javascript:alert(\'XSS\');">',
+                '',
+            ],
+            [
+                // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META_using_data
+                '<META HTTP-EQUIV="refresh" CONTENT="0;url=data:text/html base64,' .
+                'PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K">',
+                '',
+            ],
+            [
+                // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#META_with_additional_URL_parameter
+                '<META HTTP-EQUIV="refresh" CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">',
+                '',
+            ],
+            [
+                // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Non-alpha-non-digit_XSS
+                '<META HTTP-EQUIV!#$%&()*~+-_.,:;?@[/|\]^`="refresh" CONTENT="0;url=javascript:alert(\'XSS\');">',
+                '',
+            ],
+            [
+                '<META HTTP-EQUIV=refresh CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">',
+                '',
+            ],
+            [
+                '<META HTTP-EQUIV=`refresh` CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">',
+                '',
+            ],
+            [
+                '<META HTTP-EQUIV=\'refresh\' CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">',
+                '',
+            ],
             // Test attribute cleaner is used
-            ['<META HTTP-EQUIV="re fresh" CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
-            ['<META HTTP-EQUIV="re&#115;fresh" CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">', ''],
-
+            'attrClean1' => [
+                '<META HTTP-EQUIV="re fresh" CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">',
+                '',
+            ],
+            'attrClean2' => [
+                '<META HTTP-EQUIV="re&#115;fresh" CONTENT="0; URL=http://;URL=javascript:alert(\'XSS\');">',
+                '',
+            ],
             // Test valid meta tag
-            ['<meta http-equiv= x-ua-compatible content= ie=edge>', '<meta http-equiv= x-ua-compatible content= ie=edge>'],
-            ['<meta http-equiv="x-ua-compatible" content="ie=edge">', '<meta http-equiv="x-ua-compatible" content="ie=edge">'],
+            'validMeta1' => [
+                '<meta http-equiv= x-ua-compatible content= ie=edge>',
+                '<meta http-equiv= x-ua-compatible content= ie=edge>',
+            ],
+            'validMeta2' => [
+                '<meta http-equiv="x-ua-compatible" content="ie=edge">',
+                '<meta http-equiv="x-ua-compatible" content="ie=edge">',
+            ],
         ];
     }
 }

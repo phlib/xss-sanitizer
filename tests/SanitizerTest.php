@@ -26,7 +26,10 @@ class SanitizerTest extends TestCase
         return [
             ['<body><script>alert(\'XSS\');</script></body>', '<body></body>'],
             ['<body><iframe src="xss.com"></iframe></body>', '<body></body>'],
-            ['<body><OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"></OBJECT></body>', '<body></body>'],
+            [
+                '<body><OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"></OBJECT></body>',
+                '<body></body>',
+            ],
 
             ['<body><scr<script></script>ipt>alert(\'XSS\');</script></body>', '<body></body>'],
 

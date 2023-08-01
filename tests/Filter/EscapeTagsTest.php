@@ -24,8 +24,14 @@ class EscapeTagsTest extends TestCase
     public function escapeTagsDataProvider(): array
     {
         return [
-            ['<body><script>alert(\'XSS\');</script></body>', '<body>&lt;script>alert(\'XSS\');&lt;/script></body>'],
-            ['<body><scri<script>pt>alert(\'XSS\');<scri</script>pt></body>', '<body><scri&lt;script>pt>alert(\'XSS\');<scri&lt;/script>pt></body>'],
+            [
+                '<body><script>alert(\'XSS\');</script></body>',
+                '<body>&lt;script>alert(\'XSS\');&lt;/script></body>',
+            ],
+            [
+                '<body><scri<script>pt>alert(\'XSS\');<scri</script>pt></body>',
+                '<body><scri&lt;script>pt>alert(\'XSS\');<scri&lt;/script>pt></body>',
+            ],
         ];
     }
 }
