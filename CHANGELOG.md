@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Removed
-- Remove test dependency asset files, and remove test files from dist package. 
+- Remove test dependency asset files, and remove test files from dist package.
 
 ## [2.0.1] - 2022-06-08
 ### Fixed
