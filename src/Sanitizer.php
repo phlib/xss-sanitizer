@@ -16,8 +16,13 @@ class Sanitizer
      */
     private array $filters;
 
-    public function __construct()
+    protected $removeBlocks = ['script', 'iframe', 'object'];
+    protected $removeAttributtes = [];
+
+    public function __construct($removeBlocks, $removeAttributtes)
     {
+        $this->removeBlocks = [...$this->removeBlocks, ...$removeBlocks];
+        $this->removeAttributtes = [...$this->removeAttributtes, ...$removeAttributtes];
         $this->initFilters();
     }
 
@@ -54,10 +59,10 @@ class Sanitizer
         $this->filters[] = new Filter\AttributeCleaner('background', $attributeContentCleaner);
         $this->filters[] = new Filter\FilterRunner(
             // Keep trying to remove blocks before escaping the tags
-            new Filter\RemoveBlocks(['script', 'iframe', 'object'])
+            new Filter\RemoveBlocks($this->removeBlocks)
         );
-        $this->filters[] = new Filter\EscapeTags(['script', 'iframe', 'object']);
-        $this->filters[] = new Filter\RemoveAttributes();
+        $this->filters[] = new Filter\EscapeTags($this->removeBlocks);
+        $this->filters[] = new Filter\RemoveAttributes($this->removeAttributtes);
         $this->filters[] = new Filter\MetaRefresh($attributeContentCleaner);
     }
 }

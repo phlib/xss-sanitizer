@@ -33,7 +33,9 @@ $ composer require phlib/xss-sanitizer
 Create a sanitizer and sanitize some input
 
 ``` php
-$sanitizer = new \Phlib\XssSanitizer\Sanitizer();
+$removeBlocks = ['xss'];
+$removeAttributtes = ['onwebkittransitionend'];
+$sanitizer = new \Phlib\XssSanitizer\Sanitizer($removeBlocks, $removeAttributtes);
 $sanitized = $sanitizer->sanitize($htmlInput);
 
 ```
