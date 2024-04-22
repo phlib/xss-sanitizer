@@ -17,7 +17,7 @@ class RemoveAttributes implements FilterInterface
 
     private AttributeFinder $attributeFinder;
 
-    public function __construct()
+    public function __construct($attributes = [])
     {
         // source: https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Event_Handlers
         $attributes = [
@@ -37,7 +37,7 @@ class RemoveAttributes implements FilterInterface
             'onrowdelete', 'onrowinserted', 'onscroll', 'onseek', 'onselect', 'onselectionchange', 'onselectstart',
             'onstart', 'onstop', 'onstorage', 'onsyncrestored', 'onsubmit', 'ontimeerror', 'ontrackchange', 'onundo',
             'onunload', 'onurlflip',
-            'seeksegmenttime',
+            'seeksegmenttime', ...$attributes
         ];
 
         $this->tagFinder = new TagFinder\ByAttribute($attributes);
