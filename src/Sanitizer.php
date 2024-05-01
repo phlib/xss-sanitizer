@@ -16,10 +16,11 @@ class Sanitizer
      */
     private array $filters;
 
-    protected $removeBlocks = ['script', 'iframe', 'object'];
-    protected $removeAttributtes = [];
+    private array $removeBlocks = ['script', 'iframe', 'object'];
+    
+    private array $removeAttributtes = [];
 
-    public function __construct($removeBlocks, $removeAttributtes)
+    public function __construct(array $removeBlocks = [], array $removeAttributtes = [])
     {
         $this->removeBlocks = [...$this->removeBlocks, ...$removeBlocks];
         $this->removeAttributtes = [...$this->removeAttributtes, ...$removeAttributtes];
