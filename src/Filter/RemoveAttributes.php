@@ -17,7 +17,7 @@ class RemoveAttributes implements FilterInterface
 
     private AttributeFinder $attributeFinder;
 
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         // source: https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Event_Handlers
         $attributes = [
