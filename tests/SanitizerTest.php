@@ -80,4 +80,64 @@ class SanitizerTest extends TestCase
 
         static::assertSame($expected, $actual);
     }
+
+    /**
+     * @dataProvider dataSanitizeExtraBlocks
+     */
+    public function testSanitizeExtraBlocks(string $original, array $blocks, string $expected): void
+    {
+        $actual = (new Sanitizer($blocks))->sanitize($original);
+        static::assertSame($expected, $actual);
+    }
+
+    public function dataSanitizeExtraBlocks(): array
+    {
+        return [
+            'extraNotRemovedWithDefaults' => [
+                '<body><phlib>alert(\'XSS\');</phlib></body>',
+                [],
+                '<body><phlib>alert(\'XSS\');</phlib></body>',
+            ],
+            'extraRemoved' => [
+                '<body><phlib>alert(\'XSS\');</phlib></body>',
+                ['phlib'],
+                '<body></body>',
+            ],
+            'defaultsStillRemovedWithExtras' => [
+                '<body><script>alert(\'XSS\');</script></body>',
+                ['phlib'],
+                '<body></body>',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataSanitizeExtraAttributes
+     */
+    public function testSanitizeExtraAttributes(string $original, array $attributes, string $expected): void
+    {
+        $actual = (new Sanitizer([], $attributes))->sanitize($original);
+        static::assertSame($expected, $actual);
+    }
+
+    public function dataSanitizeExtraAttributes(): array
+    {
+        return [
+            'extraNotRemovedWithDefaults' => [
+                '<body data-phlib="alert(document.cookie);">',
+                [],
+                '<body data-phlib="alert(document.cookie);">',
+            ],
+            'extraRemoved' => [
+                '<body data-phlib="alert(document.cookie);">',
+                ['data-phlib'],
+                '<body >',
+            ],
+            'defaultsStillRemovedWithExtras' => [
+                '<body onload="alert(document.cookie);">',
+                ['data-phlib'],
+                '<body >',
+            ],
+        ];
+    }
 }

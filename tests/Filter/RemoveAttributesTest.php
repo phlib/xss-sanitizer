@@ -57,4 +57,34 @@ class RemoveAttributesTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider dataRemoveAttributesExtra
+     */
+    public function testRemoveAttributesExtra(string $original, array $attributes, string $expected): void
+    {
+        $actual = (new RemoveAttributes($attributes))->filter($original);
+        static::assertSame($expected, $actual);
+    }
+
+    public function dataRemoveAttributesExtra(): array
+    {
+        return [
+            'extraNotRemovedWithDefaults' => [
+                '<body data-phlib="alert(document.cookie);">',
+                [],
+                '<body data-phlib="alert(document.cookie);">',
+            ],
+            'extraRemoved' => [
+                '<body data-phlib="alert(document.cookie);">',
+                ['data-phlib'],
+                '<body >',
+            ],
+            'defaultsStillRemovedWithExtras' => [
+                '<body onload="alert(document.cookie);">',
+                ['data-phlib'],
+                '<body >',
+            ],
+        ];
+    }
 }
