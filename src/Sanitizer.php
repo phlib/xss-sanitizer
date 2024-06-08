@@ -17,6 +17,7 @@ class Sanitizer
     private array $filters;
 
     protected $removeBlocks = ['script', 'iframe', 'object'];
+
     protected $removeAttributtes = [];
 
     public function __construct($removeBlocks, $removeAttributtes)

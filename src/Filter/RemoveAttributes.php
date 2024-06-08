@@ -37,7 +37,7 @@ class RemoveAttributes implements FilterInterface
             'onrowdelete', 'onrowinserted', 'onscroll', 'onseek', 'onselect', 'onselectionchange', 'onselectstart',
             'onstart', 'onstop', 'onstorage', 'onsyncrestored', 'onsubmit', 'ontimeerror', 'ontrackchange', 'onundo',
             'onunload', 'onurlflip',
-            'seeksegmenttime', ...$attributes
+            'seeksegmenttime', ...$attributes,
         ];
 
         $this->tagFinder = new TagFinder\ByAttribute($attributes);
