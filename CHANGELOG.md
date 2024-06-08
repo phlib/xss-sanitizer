@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.1.0] - 2024-06-08
 ### Added
 - Optional constructor params to specify extra tags or attributes to be removed.
   HT @EmanuelAugusto
