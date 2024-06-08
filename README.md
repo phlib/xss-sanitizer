@@ -30,12 +30,21 @@ $ composer require phlib/xss-sanitizer
 
 ## Usage
 
-Create a sanitizer and sanitize some input
+Create a sanitizer and sanitize some input:
 
-``` php
+```php
 $sanitizer = new \Phlib\XssSanitizer\Sanitizer();
 $sanitized = $sanitizer->sanitize($htmlInput);
+```
 
+Optionally, extra tags and/or attributes can be specified to be removed,
+in addition to the defaults:
+
+```php
+$removeBlocks = ['xss'];
+$removeAttributes = ['onwebkittransitionend'];
+$sanitizer = new \Phlib\XssSanitizer\Sanitizer($removeBlocks, $removeAttributes);
+$sanitized = $sanitizer->sanitize($htmlInput);
 ```
 
 ## Supported Browsers
