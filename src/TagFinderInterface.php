@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Phlib\XssSanitizer;
 
 /**
- * Interface TagFinderInterface
  * @package Phlib\XssSanitizer
  */
 interface TagFinderInterface

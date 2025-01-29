@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Phlib\XssSanitizer;
 
 /**
- * Trait FilterRunnerTrait
  * @package Phlib\XssSanitizer
  */
 trait FilterRunnerTrait
